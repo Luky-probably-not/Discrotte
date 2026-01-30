@@ -1,16 +1,11 @@
-<script>
-import MessageBody from '@messages/MessageBody.vue';
-import MessageHeader from '@messages/MessageHeader.vue';
-export default {
-    name: "Message",
-    components: {
-        MessageHeader,
-        MessageBody
-    }
-};
+<script setup lang="ts">
+import MessageBody from '@/components/messages/MessageBody.vue';
+import MessageHeader from '@/components/messages/MessageHeader.vue';
 </script>
 <template>
     <p>Message Component</p>
     <MessageHeader />
     <MessageBody />
 </template>
+<style scoped>
+</style>

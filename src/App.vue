@@ -1,9 +1,8 @@
-<script>
-export default {
-  name: 'DisCrotte',
-}
+<script setup lang="ts">
+
 </script>
 
 <template>
-  <router-view />
+  <RouterView></RouterView>
+  <RouterLink to=""></RouterLink>
 </template>
