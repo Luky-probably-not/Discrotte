@@ -5,7 +5,6 @@ import MessageBloc from '@/components/MessageBloc.vue';
 
 </script>
 <template>
-    <p>Chat Page</p>
     <ChanelList />
     <UserList />
     <MessageBloc />

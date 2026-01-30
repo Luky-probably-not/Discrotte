@@ -5,7 +5,6 @@ import InfoChannel from '@/components/channels/InfoChannel.vue';
 
 </script>
 <template>
-    <p>User List Component</p>
     <User />
     <AddUser />
     <InfoChannel />

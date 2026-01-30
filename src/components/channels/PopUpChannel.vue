@@ -1,7 +1,6 @@
 <script setup lang="ts">
 </script>
 <template>
-    <p>Pop Up Channel Component</p>
 </template>
 <style scoped>
 </style>
