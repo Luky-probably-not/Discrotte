@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import MessageBar from '@/components/MessageBar.vue';
 import ChanelList from '@/components/ChanelList.vue';
 import UserList from '@/components/UserList.vue';
-import MessageList from '@/components/MessageList.vue';
+import MessageBloc from '@/components/MessageBloc.vue';
 
 </script>
 <template>
     <p>Chat Page</p>
     <ChanelList />
-    <MessageList />
-    <MessageBar />
     <UserList />
+    <MessageBloc />
+
 
 </template>
 <style scoped>
