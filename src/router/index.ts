@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import ChatPageView from '@/views/ChatPageView.vue';
 import LoginPageView from '@/views/LoginPageView.vue';
-import ChatPageView from '@/views/ChatPageView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
 
 
 export default createRouter({
@@ -15,7 +15,7 @@ export default createRouter({
             path: '/', 
             name: "home", 
             component: ChatPageView 
-        },
+        }
         // {
         //     path: '/:pathMatch(.*)*', 
         //     name: 'NotFound', 
