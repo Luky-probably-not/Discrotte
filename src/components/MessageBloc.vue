@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import MessageList from '@/components/messages/MessageList.vue';
-import MessageBar from '@/components/messages/MessageBar.vue';
+import MessageInput from '@/components/messages/MessageInput.vue';
 </script>
 <template>
     <MessageList />
-    <MessageBar />
+    <MessageInput />
 </template>
 <style scoped>
 </style>
