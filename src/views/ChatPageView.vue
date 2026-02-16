@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import ChanelList from '@/components/ChanelList.vue';
+import ChannelList from '@/components/ChannelList.vue';
 import UserList from '@/components/UserList.vue';
-import MessageBloc from '@/components/MessageBloc.vue';
 
 </script>
 <template>
-    <ChanelList />
+    <ChannelList />
     <UserList />
-    <MessageBloc />
-
-
 </template>
 <style scoped>
 </style>
