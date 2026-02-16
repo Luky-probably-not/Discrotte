@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import LoginUser from '@/components/users/LoginUser.vue';
-import { connectedUser } from '@/ts/connectedUser';
 import { addUserToChannel } from '@/ts/users';
 import { ref } from 'vue';
-
-const channelId = ref(-1)
+const props = defineProps({
+    tokenJwt : String,
+    channelId : Number
+})
 const userName = ref("")
-
-const user = connectedUser();
 
 const addUser = async () => {
     if (userName.value == undefined || userName.value == "")        
@@ -15,19 +13,17 @@ const addUser = async () => {
         console.log("userName null");
         return;
     }    
-    if (channelId.value == undefined || channelId.value == -1)
+    if (props.channelId! == undefined || props.channelId! == -1)
     {
         console.log("password null");
         return;
     }   
-    await addUserToChannel(user.tokenJwt, userName.value, channelId.value)
+    await addUserToChannel(props.tokenJwt!, userName.value, props.channelId!)
 }
 
 </script>
 <template>
     <p>Add User Component</p>
-    <LoginUser />
-    <input type="integer" v-model="channelId">
     <input type="text" v-model="userName">
     <button @click="addUser">addUser</button>
 </template>

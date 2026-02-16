@@ -1,8 +1,6 @@
-const apiUrl = import.meta.env.VITE_API_URL as string
+import type { User } from "./domain/user";
+import { addUserToChannelUrl, getMultipleUserByNameUrl, getOneUserByNameUrl, loginUrl } from "./urls/users";
 
-const loginUrl = apiUrl + "/login";
-const addUserToChannelUrl = (channel_id : number, username : string) : string =>
-    apiUrl + `/protected/channel/${channel_id}/user/${username}`
 
 const login = async (username : string, password : string) : Promise<string> => {
     var request = await fetch(loginUrl, {
@@ -27,9 +25,30 @@ const addUserToChannel = async (token : string, username : string, idChannel : n
         }
     })
     var response = await request.status
-    console.log(response)
     return;
 }
 
-export { addUserToChannel, login };
+const getOneUserByName = async (token : string, user : string) : Promise<User> => {
+    var request = await fetch(getOneUserByNameUrl(user), {
+        method: "GET",
+        headers :{
+            "Authorization" : "Bearer " + token
+        }
+    });
+    var response : User[] = await request.json();
+    return response[0]!;
+}
+
+const getMultipleUserByName = async (token : string, users : string[]) : Promise<User[]> => {
+    var request = await fetch(getMultipleUserByNameUrl(users), {
+        method: "GET",
+        headers :{
+            "Authorization" : "Bearer " + token
+        }
+    });
+    var response : User[] = await request.json();
+    return response;
+}
+
+export { addUserToChannel, getMultipleUserByName, getOneUserByName, login };
 

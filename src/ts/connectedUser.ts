@@ -11,7 +11,6 @@ export const connectedUser = defineStore("ConnectedUser", () => {
         userName.value = username;
         tokenJwt.value = token;
     }
-
     return {userName, tokenJwt, addUser}
 });
 

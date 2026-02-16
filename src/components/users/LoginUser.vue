@@ -3,10 +3,13 @@ import { connectedUser } from '@/ts/connectedUser';
 import { login } from '@/ts/users';
 import { ref } from 'vue';
 
+const props = defineProps({
+    token : String,
+    store : connectedUser
+})
+
 const userName = ref("")
 const password = ref("")
-
-const user = connectedUser()
 
 const loginUser = async () => {
     if (userName.value == undefined || userName.value == "")        
@@ -20,9 +23,8 @@ const loginUser = async () => {
         return;
     }   
     let token = await login(userName.value,password.value)
-    user.addUser(token, userName.value)
-    console.log(user.tokenJwt)
-    console.log(user.userName)
+    props.store!.addUser(token,userName.value);
+    console.log(token);
 }
 </script>
 
