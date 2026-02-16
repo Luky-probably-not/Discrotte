@@ -1,22 +1,17 @@
 <script setup lang="ts">
-    import {GetChannelByID, type ChannelPromise} from "@/ts/channels"
+    import {GetChannelByID, type Channel,selectedChannelID} from "@/ts/channels"
 
     import { ref,watch, type Ref } from "vue"
    
-    const channelID = ref<number | null>(null)
-    const infoChannel: Ref<ChannelPromise | null> = ref(null)
+    const infoChannel: Ref<Channel | null> = ref(null)
 
-    watch(channelID, async (newID) => {
+    watch(selectedChannelID, async (newID) => {
         if (newID !== null) {
             infoChannel.value = await GetChannelByID(newID)
         }
     })
 </script>
 <template>
-    <form @submit.prevent>
-        <input type="number" v-model.number="channelID" placeholder="Entrez un ID" />
-    </form>
-
     <div v-if="infoChannel">
         <h2>Détails du channel :</h2>
         <p>{{infoChannel.id}} </p>

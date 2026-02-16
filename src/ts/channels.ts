@@ -1,14 +1,8 @@
+import { type Channel} from "@/ts/type"
+import { ref } from "vue"
 const api_url = import.meta.env.VITE_API_URL as string
 
-const token = "eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6ImZhbHNlIiwiaWF0IjoiMTc2OTc3ODE1OCIsInN1YiI6ImMuam9seSJ9.oD2Rq2yImbih8BW7JL07hFIA36KgD9QeVDRaaSGWecs"
-
-type ChannelPromise = {
-    id: number,
-    name:string,
-    img:string,
-    users:string[],
-    theme:string
-}
+const token = "eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbiI6ImZhbHNlIiwiaWF0IjoiMTc3MTIyNzg3NyIsInN1YiI6ImMuam9seSJ9.2ZfMduv_DaWCely2d1B9LwjvwIf8Cq3wuXDxKwyLND0"
 
 const GetChannelByUser = async () => {
     const request = await fetch(api_url+"/protected/user/channels",{
@@ -26,9 +20,11 @@ const GetChannelByID = async (id: number) => {
   return channels.find((c: any) => c.id === id)
 }
 
+const selectedChannelID = ref<number | null>(null)
 export {
+    selectedChannelID,
     GetChannelByUser,
     GetChannelByID,
-    type ChannelPromise
+    type Channel
 }
 

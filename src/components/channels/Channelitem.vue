@@ -1,10 +1,12 @@
 <script setup lang="ts">
-    import {type ChannelPromise} from "@/ts/channels"
+    import {type Channel,selectedChannelID} from "@/ts/channels"
 
-    defineProps<{channel: ChannelPromise}>()
+    defineProps<{channel: Channel}>()
 </script>
 
 <template>
-    <p>{{ channel.name }}</p>
-    <img :src="channel.img" alt="channel picture" />
+    <div class="channel-item" @click="selectedChannelID = channel.id">
+        <p>{{ channel.name }}</p>
+        <img :src="channel.img" alt="channel picture" />
+    </div>
 </template>
