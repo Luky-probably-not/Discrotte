@@ -4,5 +4,4 @@
 
 <template>
   <RouterView></RouterView>
-  <RouterLink to=""></RouterLink>
 </template>
