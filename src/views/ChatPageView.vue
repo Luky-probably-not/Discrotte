@@ -11,7 +11,7 @@ const store = useStore();
 <template>
     <UserChannelsLayout />
     <ChatLayout />
-    <ChannelInfoLayout/>
+    <ChannelInfoLayout v-if="store.currentChannel != null"/>
 
 </template>
 <style scoped>

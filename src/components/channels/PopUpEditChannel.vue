@@ -1,20 +1,36 @@
 <script setup lang="ts">
 import { UpdateChannel } from '@/api/channel';
 import { useStore } from '@/store';
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 const store = useStore();
 
 const inEditionProcess = ref(false)
-const currentChannelInfo = store.currentChannel!;
+let currentChannelInfo = store.currentChannel!;
+
+const currentChannelWatcher = computed(() => {
+    return store.currentChannel!
+})
+
+watch(
+    currentChannelWatcher,
+    () => {
+        reloadChannel();
+        inEditionProcess.value = false;
+    })
 
 const switchEditionProcess = () => {
+    reloadChannel();
     inEditionProcess.value = !inEditionProcess.value
 }
 
 const editChanel = async () => {
     await UpdateChannel(store.currentChannel!.id, currentChannelInfo)
     switchEditionProcess();
+}
+
+const reloadChannel = () => {
+    currentChannelInfo = store.currentChannel!;
 }
 
 </script>
