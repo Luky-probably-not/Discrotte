@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { UpdateChannel } from '@/api/channel';
 import { useStore } from '@/store';
-import { computed, ref, watch } from 'vue';
+import { computed, watch } from 'vue';
 
 const store = useStore();
 
-const inEditionProcess = ref(false)
+const emit = defineEmits(["closeEdition"])
+
 let currentChannelInfo = store.currentChannel!;
 
 const currentChannelWatcher = computed(() => {
@@ -16,27 +17,27 @@ watch(
     currentChannelWatcher,
     () => {
         reloadChannel();
-        inEditionProcess.value = false;
     })
 
 const switchEditionProcess = () => {
     reloadChannel();
-    inEditionProcess.value = !inEditionProcess.value
 }
 
 const editChanel = async () => {
     await UpdateChannel(store.currentChannel!.id, currentChannelInfo)
     switchEditionProcess();
+    emit("closeEdition")
 }
 
 const reloadChannel = () => {
     currentChannelInfo = store.currentChannel!;
 }
 
-</script>   
+
+</script>
 <template>
-    <button @click="switchEditionProcess">Edit channel ?</button>
-    <form v-if="inEditionProcess">
+    <button @click="emit('closeEdition')">X</button>
+    <form>
         <p>Channel's name</p>
         <input v-model="currentChannelInfo.name">
         <p>Channel's picture</p>

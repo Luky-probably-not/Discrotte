@@ -3,7 +3,12 @@ import { addUserToChannel } from '@/api/user';
 import { useStore } from '@/store';
 import { ref } from 'vue';
 
+defineProps({
+    isCreator:Boolean
+})
+
 const store = useStore();
+
 
 const userName = ref("")
 
@@ -19,8 +24,10 @@ const addUser = async () => {
 
 </script>
 <template>
-    <input id="userName" type="text" v-model="userName">
-    <button @click="addUser">addUser</button>
+    <div v-if="isCreator">
+        <input id="userName" type="text" v-model="userName">
+        <button @click="addUser">addUser</button>
+    </div>
 </template>
 <style scoped>
 </style>
