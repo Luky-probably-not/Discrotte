@@ -5,9 +5,7 @@
     import { ref, onMounted } from "vue"
 
     const store = useStore();
-    const emit = defineEmits<{
-        close: []
-    }>();
+    const emit = defineEmits(['closeProfile']);
 
     const userInfo = ref<User>({
         username: '',
@@ -22,11 +20,11 @@
 
     const update = async () => {
         await UpdateUser(userInfo.value);
-        emit('close');
+        emit('closeProfile');
     }
 </script>
 <template>
-    <button @click="$emit('close')">+</button>
+    <button @click="$emit('closeProfile')">+</button>
     <form @submit.prevent="update()">
         <input v-model="userInfo.display_name" />
         <p>{{ userInfo.username }}</p>

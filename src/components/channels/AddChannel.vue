@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import PopUpChannel from '@/components/channels/PopUpChannel.vue';
-import { PrintPopUpChannel } from '@/api/channel';
+    import PopUpChannel from '@/components/channels/PopUpChannel.vue';
+    import { ref } from 'vue';
 
+    const ShowAddChannel = ref(false);
 </script>
 <template>
-    <button @click="PrintPopUpChannel = !PrintPopUpChannel">+</button>
-    <PopUpChannel v-if="PrintPopUpChannel" />
+    <button @click="ShowAddChannel = !ShowAddChannel">+</button>
+    <PopUpChannel v-if="ShowAddChannel" @CloseAddChannel="ShowAddChannel = false"/>
 </template>
 <style scoped>
 </style>

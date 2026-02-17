@@ -68,14 +68,12 @@ const UpdateUser = async (user : User) => {
     return;
 }
 
-const showProfile = ref(false);
 
 export {
     addUserToChannel,
     getMultipleUserByName,
     getOneUserByName,
     login,
-    UpdateUser,
-    showProfile
+    UpdateUser
 };
 

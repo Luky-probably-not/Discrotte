@@ -8,7 +8,7 @@
     <button @click="showProfile = !showProfile">+</button>
     <PopUpUserProfile
         v-if="showProfile"
-        @close="showProfile = false"
+        @closeProfile="showProfile = false"
     />
 </template>
 <style scoped>
