@@ -48,6 +48,11 @@ onUnmounted(() => {
     }
 });
 
+const reloadMessages = async () => {
+    const initialMessages = await getChannelMessages(store.currentChannel!.id);
+    messages.value = initialMessages;
+}
+
 </script>
 <template>
     <section class="message-list">
@@ -57,6 +62,7 @@ onUnmounted(() => {
                 :timestamp="message.timestamp"
                 :content-type="message.content.type"
                 :content-value="message.content.value"
+                @message-update="reloadMessages()"
             />
         </div>
     </section>

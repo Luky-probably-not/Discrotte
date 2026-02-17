@@ -7,7 +7,7 @@ export const useStore = defineStore("Discard", () => {
     const jwtToken = ref<string>("")
     const currentChannel = ref<Channel | null>()
     const userChannels = ref<Channel[]>([])
-    const messageDrafts = ref<Record<string, string>>({});
+    const messageDrafts = ref<Record<number, string>>({});
 
 
     const setAuthInfo = (connectedUsername: string, token: string) => {
@@ -33,17 +33,17 @@ export const useStore = defineStore("Discard", () => {
     }
 
         // set or update draft for one channel
-    const setDraftForChannel = (channelId: string, text: string) => {
+    const setDraftForChannel = (channelId: number, text: string) => {
         messageDrafts.value[channelId] = text;
     };
 
     // get draft for one channel (undefined if none)
-    const getDraftForChannel = (channelId: string): string | undefined => {
+    const getDraftForChannel = (channelId: number): string | undefined => {
         return messageDrafts.value[channelId];
     };
 
     // remove draft (after sending)
-    const clearDraftForChannel = (channelId: string) => {
+    const clearDraftForChannel = (channelId: number) => {
         delete messageDrafts.value[channelId];
     };
 

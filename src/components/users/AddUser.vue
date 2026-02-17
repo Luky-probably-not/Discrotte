@@ -13,17 +13,13 @@ const addUser = async () => {
         console.log("userName null");
         return;
     }
-    if (store.currentChannel == undefined || store.currentChannel.id == -1)
-    {
-        console.log("password null");
-        return;
-    }
-    await addUserToChannel(userName.value, store.currentChannel.id)
+    await addUserToChannel(userName.value, store.currentChannel!.id)
+    document.getElementById('userName')!.value = "";
 }
 
 </script>
 <template>
-    <input type="text" v-model="userName">
+    <input id="userName" type="text" v-model="userName">
     <button @click="addUser">addUser</button>
 </template>
 <style scoped>
