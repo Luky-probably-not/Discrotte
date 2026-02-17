@@ -14,10 +14,17 @@
 
 </script>
 <template>
-    <div v-for="channel in store.userChannels" :key="channel.id">
+    <section class="channel-list">
+        <article v-for="channel in store.userChannels" :key="channel.id">
         <Channelitem :channel="channel" />
-    </div>
+        </article>
+  </section>
 
 </template>
 <style scoped>
+    .channel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px; 
+    }
 </style>
