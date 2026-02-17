@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { createMessage } from '@/api/message';
 import { useStore } from '@/store';
 
@@ -8,6 +8,30 @@ const preview = ref('');
 const contentType = ref('Text');
 const store = useStore();
 
+// Load draft when channel changes
+watch(() => store.currentChannel?.id, (channelId) => {
+    if (channelId) {
+        messageInput.value = store.getDraftForChannel(channelId) ?? '';
+    }
+});
+
+// Save draft on input change
+const handleInput = async () => {
+    const trimmedInput = messageInput.value.trim();
+
+    // Save draft to store
+    if (store.currentChannel) {
+        store.setDraftForChannel(store.currentChannel.id, messageInput.value);
+    }
+
+    if (await isValidImageUrl(trimmedInput)) {
+        contentType.value = 'Image';
+        preview.value = trimmedInput;
+    } else {
+        contentType.value = 'Text';
+        preview.value = '';
+    }
+};
 
 const isValidImageUrl = async (url: string) => {
     try {
@@ -19,24 +43,16 @@ const isValidImageUrl = async (url: string) => {
     }
 };
 
-const handleInput = async () => {
-    const trimmedInput = messageInput.value.trim();
-
-    if (await isValidImageUrl(trimmedInput)) {
-        contentType.value = 'Image';
-        preview.value = trimmedInput;
-    } else {
-        contentType.value = 'Text';
-        preview.value = '';
-    }
-};
-
 const handleSubmit = async (e: Event) => {
     e.preventDefault();
 
     if (!messageInput.value.trim()) return;
 
     await createMessage(store.currentChannel!.id, contentType.value, messageInput.value);
+
+    // Clear draft after sending
+    store.clearDraftForChannel(store.currentChannel!.id);
+
     messageInput.value = '';
     preview.value = '';
     contentType.value = 'Text';

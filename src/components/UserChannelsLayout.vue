@@ -5,11 +5,11 @@
 
 </script>
 
-<template>
+<template class="right-panel">
     <section class="right-panel">
-        <AddChannel />
-        <ChannelList />
-        <UserProfile />
+        <AddChannel class="top"/>
+        <ChannelList class="middle"/>
+        <UserProfile class="bottom"/>
     </section>
 </template>
 
@@ -17,6 +17,27 @@
 .right-panel {
   display: flex;
   flex-direction: column;
-  gap: 12px; 
+  flex :1; 
+}
+
+.top {
+  flex-shrink: 0;
+}
+
+.middle {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.bottom {
+  flex-shrink: 0;
+}
+.middle::-webkit-scrollbar {
+  width: 6px;
+}
+
+.middle::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
 }
 </style>

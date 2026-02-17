@@ -48,16 +48,27 @@ onUnmounted(() => {
     }
 });
 
+const reloadMessages = async () => {
+    const initialMessages = await getChannelMessages(store.currentChannel!.id);
+    messages.value = initialMessages;
+}
+
 </script>
 <template>
-    <div v-for="message in messages" :key="message.timestamp">
-        <MessageItem
-            :author="message.author"
-            :timestamp="message.timestamp"
-            :content-type="message.content.type"
-            :content-value="message.content.value"
-        />
-    </div>
+    <section class="message-list">
+        <div v-for="message in messages" :key="message.timestamp">
+            <MessageItem
+                :author="message.author"
+                :timestamp="message.timestamp"
+                :content-type="message.content.type"
+                :content-value="message.content.value"
+                @message-update="reloadMessages()"
+            />
+        </div>
+    </section>
 </template>
 <style scoped>
+.message-list {
+  height: 100%;
+}
 </style>
