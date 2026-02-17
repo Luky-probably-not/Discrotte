@@ -5,12 +5,14 @@
     const showProfile = ref(false);
 </script>
 <template>
-    <button @click="showProfile = !showProfile">Edit Profile</button>
-    <div v-if="showProfile" class="overlay">
+    <article class="toolbar">
+        <button @click="showProfile = !showProfile">Edit Profile</button>
+    </article>
+    <section v-if="showProfile" class="overlay">
         <PopUpUserProfile
             @closeProfile="showProfile = false"
         />
-    </div>
+    </section>
 </template>
 <style scoped>
 .overlay {
@@ -23,5 +25,13 @@
   justify-content: center;
 
   z-index: 1000;
+}
+.toolbar {
+  display: flex;
+  align-items: flex-start;
+}
+
+button {
+  height: auto;
 }
 </style>
