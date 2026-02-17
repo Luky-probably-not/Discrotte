@@ -24,7 +24,7 @@
     }
 </script>
 <template>
-    <button @click="$emit('closeProfile')">+</button>
+    <button @click="$emit('closeProfile')">X</button>
     <form @submit.prevent="update()">
         <input v-model="userInfo.display_name" />
         <p>{{ userInfo.username }}</p>

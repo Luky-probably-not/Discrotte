@@ -20,7 +20,7 @@ const connectWebSocket = async () => {
     messages.value = [];
 
     // Load initial messages from API
-    const initialMessages = await getChannelMessages(store.currentChannelId);
+    const initialMessages = await getChannelMessages(store.currentChannel!.id);
     messages.value = initialMessages;
 
     ws = new WebSocket(`/ws/channel/${channelId}/token/${store.jwtToken}`);
