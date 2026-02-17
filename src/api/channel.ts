@@ -68,11 +68,8 @@ const PostChannel = async (name: string, img: string) => {
     return
 }
 
-const PrintPopUpChannel = ref(false)
-
 export {
     GetChannelByID,
-    GetChannelByUser, PostChannel,
-    PrintPopUpChannel, UpdateChannel
+    GetChannelByUser, PostChannel, UpdateChannel
 };
 

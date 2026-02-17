@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { PostChannel, PrintPopUpChannel} from '@/api/channel';
+import { PostChannel} from '@/api/channel';
 import { ref } from 'vue';
+
+const emit = defineEmits(['CloseAddChannel']);
 
 const name = ref("")
 const img = ref("")
 
 const submitForm = async () => {
   await PostChannel(name.value, img.value)
-  PrintPopUpChannel.value = false
+  emit('CloseAddChannel');
 }
 </script>
 <template>
-    <button @click="PrintPopUpChannel = !PrintPopUpChannel">X</button>
+    <button @click="emit('CloseAddChannel')">X</button>
     <form @submit.prevent="submitForm">
         <label>Name : </label>
         <input type="text" v-model="name">
