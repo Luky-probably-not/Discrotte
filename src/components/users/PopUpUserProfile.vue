@@ -15,18 +15,20 @@
     onMounted(async () => {
         userInfo.value = await getOneUserByName(store.username)
     })
-
+    const update = async () => {
+        await UpdateUser(userInfo.value);
+        showProfile.value = !showProfile.value;
+    }
 </script>
 <template>
     <button @click="showProfile = !showProfile">+</button>
-    <form @submit.prevent="UpdateUser(userInfo)">
+    <form @submit.prevent="update()">
         <input v-model="userInfo.display_name" />
         <p>{{ userInfo.username }}</p>
         <img :src="userInfo.img" alt="user picture" />
         <input v-model="userInfo.img" />
         <input v-model="userInfo.status" />
         <button type="submit">Update</button>
-
     </form>
 </template>
 <style scoped>
