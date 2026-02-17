@@ -1,3 +1,4 @@
+import { GetChannelByUser } from "@/api/channel";
 import { type Channel } from "@/types";
 import { defineStore } from "pinia";
 import { ref } from "vue";
@@ -8,7 +9,6 @@ export const useStore = defineStore("Discard", () => {
     const currentChannel = ref<Channel | null>()
     const userChannels = ref<Channel[]>([])
     const messageDrafts = ref<Record<number, string>>({});
-
 
     const setAuthInfo = (connectedUsername: string, token: string) => {
         username.value = connectedUsername
@@ -47,6 +47,14 @@ export const useStore = defineStore("Discard", () => {
         delete messageDrafts.value[channelId];
     };
 
+    const checkIsCreator = (channelId : number) => {
+        const channel = userChannels.value.find(c => c.id == channelId);
+
+        if (channel == undefined)
+            return false;
+        return channel.creator == username.value
+    }
+
     return {
         jwtToken,
         username,
@@ -59,5 +67,6 @@ export const useStore = defineStore("Discard", () => {
         setDraftForChannel,
         getDraftForChannel,
         clearDraftForChannel,
+        CheckIsCreator: checkIsCreator
     }
 });

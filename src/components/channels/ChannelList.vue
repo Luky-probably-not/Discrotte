@@ -1,16 +1,29 @@
 <script setup lang="ts">
-    import Channelitem from '@/components/channels/Channelitem.vue';
+import Channelitem from '@/components/channels/Channelitem.vue';
 
-    import {GetChannelByUser} from "@/api/channel"
+import {GetChannelByUser} from "@/api/channel"
 
-    import {onMounted} from "vue"
+import {computed, onMounted, watch} from "vue"
 
-    import { useStore } from "@/store";
+import { useStore } from "@/store";
 
-    const store = useStore();
-    onMounted(async () => {
-        store.userChannels = await GetChannelByUser()
-    })
+const store = useStore();
+
+const channelWatcher = computed(() => store.userChannels)
+
+watch(
+    channelWatcher,
+    () => loadChannel()
+)
+
+const loadChannel = async () => {
+    store.userChannels = await GetChannelByUser()
+}
+
+
+onMounted(async () => {
+    store.userChannels = await GetChannelByUser()
+})
 
 </script>
 <template>
@@ -18,6 +31,7 @@
         <article v-for="channel in store.userChannels" :key="channel.id">
         <Channelitem :channel="channel" />
         </article>
+
   </section>
 
 </template>
@@ -25,6 +39,6 @@
     .channel-list {
     display: flex;
     flex-direction: column;
-    gap: 4px; 
+    gap: 4px;
     }
 </style>
