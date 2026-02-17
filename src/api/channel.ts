@@ -1,6 +1,5 @@
 import type  { Channel } from "@/types"
 import { getApiUrl, getAuthHeaders } from "@/api/apiHandler";
-import { ref} from "vue";
 import { useStore } from "@/store"
 
 const store = useStore()
@@ -69,13 +68,9 @@ const PostChannel = async (name: string, img: string) => {
     return
 }
 
-const PrintPopUpChannel = ref(false)
-
 export {
     GetChannelByID,
     GetChannelByUser,
     UpdateChannel,
     PostChannel,
-    PrintPopUpChannel,
-
 }
