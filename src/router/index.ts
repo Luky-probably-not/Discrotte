@@ -1,19 +1,19 @@
 import ChatPageView from '@/views/ChatPageView.vue';
 import LoginPageView from '@/views/LoginPageView.vue';
-import { connectedUser } from '@/ts/connectedUser';
 import { createRouter, createWebHistory } from 'vue-router';
+import { useStore } from '@/store';
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { 
-      path: '/login', 
-      name: "login", 
-      component: LoginPageView 
+    {
+      path: '/login',
+      name: "login",
+      component: LoginPageView
     },
-    { 
-      path: '/', 
-      name: "home", 
+    {
+      path: '/',
+      name: "home",
       component: ChatPageView,
       meta: { requiresAuth: true }
     }
@@ -21,13 +21,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const userStore = connectedUser()
+  const store = useStore()
 
-  if (to.meta.requiresAuth && userStore.tokenJwt === "") {
+  if (to.meta.requiresAuth && store.jwtToken === "") {
     return { name: "login" }
   }
 
-  if (to.name === "login" && userStore.tokenJwt !== "") {
+  if (to.name === "login" && store.jwtToken !== "") {
     return { name: "home" }
   }
 })

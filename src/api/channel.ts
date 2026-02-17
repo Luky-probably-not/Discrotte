@@ -1,8 +1,8 @@
-import type  { Channel } from "@/types"
 import { getApiUrl, getAuthHeaders } from "@/api/apiHandler";
-import { useStore } from "@/store"
+import { useStore } from "@/store";
+import type { Channel } from "@/types";
+import { ref } from "vue";
 
-const store = useStore()
 
 const GetChannelByUser = async () : Promise<Channel[]> => {
     const response = await fetch(getApiUrl(`/protected/user/channels`),{
@@ -22,7 +22,6 @@ const GetChannelByID = async (id: number) : Promise<Channel>=> {
     if (!channel) {
         throw new Error(`Channel ${id} not found`);
     }
-
     return channel;
 }
 
@@ -40,6 +39,7 @@ const UpdateChannel = async (channelId : number, newChannel : Channel) => {
 
 
 const PostChannel = async (name: string, img: string) => {
+    const store = useStore()
     const request = await fetch(getApiUrl(`/protected/channel`),{
         method : "POST",
         headers : getAuthHeaders(),
@@ -64,13 +64,12 @@ const PostChannel = async (name: string, img: string) => {
         users: []
     }
     store.userChannels.push(newChannel)
-    store.currentChannelId = response
+    store.currentChannel = response
     return
 }
 
 export {
     GetChannelByID,
-    GetChannelByUser,
-    UpdateChannel,
-    PostChannel,
-}
+    GetChannelByUser, PostChannel, UpdateChannel
+};
+
