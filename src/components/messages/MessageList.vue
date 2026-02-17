@@ -5,6 +5,8 @@ import { ref, onUnmounted, watch } from 'vue';
 import { getChannelMessages } from '@/api/message';
 import { useStore } from '@/store';
 
+const apiBaseUrl = import.meta.env.VITE_API_URL
+
 const messages = ref<Message[]>([]);
 let ws: WebSocket | null = null;
 const wsConnEstablished = ref(false);
@@ -23,7 +25,7 @@ const connectWebSocket = async () => {
     const initialMessages = await getChannelMessages(store.currentChannel!.id);
     messages.value = initialMessages;
 
-    ws = new WebSocket(`/ws/channel/${channelId}/token/${store.jwtToken}`);
+    ws = new WebSocket(`${apiBaseUrl}/ws/channel/${channelId}/token/${store.jwtToken}`);
 
     ws.onopen = () => {
         wsConnEstablished.value = true;

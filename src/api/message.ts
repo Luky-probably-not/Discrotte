@@ -7,7 +7,7 @@ const getChannelMessages = async (channelId: number): Promise<Message[]> => {
         headers: getAuthHeaders(),
     });
     if (!response.ok) {
-        console.error("Error creating message:", response.status);
+        console.error("Error getting messages:", response.status);
     }
     return await response.json();
 };
