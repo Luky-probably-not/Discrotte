@@ -1,8 +1,6 @@
 import { getApiUrl, getAuthHeaders } from "@/api/apiHandler";
 import { useStore } from "@/store";
 import type { Channel } from "@/types";
-import { ref } from "vue";
-
 
 const GetChannelByUser = async () : Promise<Channel[]> => {
     const response = await fetch(getApiUrl(`/protected/user/channels`),{
