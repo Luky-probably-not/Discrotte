@@ -36,7 +36,7 @@ const handleSubmit = async (e: Event) => {
 
     if (!messageInput.value.trim()) return;
 
-    await createMessage(store.currentChannelId, contentType.value, messageInput.value);
+    await createMessage(store.currentChannel!.id, contentType.value, messageInput.value);
     messageInput.value = '';
     preview.value = '';
     contentType.value = 'Text';

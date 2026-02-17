@@ -11,7 +11,7 @@ const channelUsers : Ref<Array<string>, Array<string>> = ref([]);
 const loadChannelUsers = async () =>{
     if (store.jwtToken != "")
     {
-        channelUsers.value = (await GetChannelByID(store.currentChannelId)).users;
+        channelUsers.value = (await GetChannelByID(store.currentChannel!.id)).users;
         for (let idx = 0; idx < channelUsers.value.length; idx++){
             const displayedName = await getOneUserByName(channelUsers.value[idx]!)
             channelUsers.value[idx] = displayedName?.display_name ?? channelUsers.value[idx];

@@ -5,6 +5,7 @@
 
 </script>
 <template>
+    <h1>UserChannelLayout</h1>
     <AddChannel />
     <ChannelList />
     <UserProfile />
