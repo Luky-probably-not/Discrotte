@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { type Channel } from "@/types";
 
 export const useStore = defineStore("Discard", () => {
     const username = ref<string>("")
     const jwtToken = ref<string>("")
     const currentChannelId = ref<number>(0)
-    const userChannels = ref<string[]>([])
+    const userChannels = ref<Channel[]>([])
     const messageDrafts = ref<Record<string, string>>({});
 
 
