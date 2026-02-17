@@ -12,8 +12,6 @@ let ws: WebSocket | null = null;
 const wsConnEstablished = ref(false);
 const store = useStore();
 
-const channelId = 273
-
 const connectWebSocket = async () => {
     if (ws) {
         ws.close();
@@ -25,7 +23,7 @@ const connectWebSocket = async () => {
     const initialMessages = await getChannelMessages(store.currentChannel!.id);
     messages.value = initialMessages;
 
-    ws = new WebSocket(`${apiBaseUrl}/ws/channel/${channelId}/token/${store.jwtToken}`);
+    ws = new WebSocket(`${apiBaseUrl}/ws/channel/${store.currentChannel!.id}/token/${store.jwtToken}`);
 
     ws.onopen = () => {
         wsConnEstablished.value = true;
@@ -40,7 +38,7 @@ const connectWebSocket = async () => {
 
 connectWebSocket();
 
-watch(() => channelId, () => {
+watch(() => store.currentChannel!.id, () => {
     connectWebSocket();
 });
 

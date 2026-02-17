@@ -45,6 +45,9 @@ const handleSubmit = async (e: Event) => {
 
 <template>
     <div class="message-input-container">
+        <div v-if="preview" class="preview">
+            <img :src="preview" :alt="messageInput" />
+        </div>
         <form @submit="handleSubmit">
             <input
                 v-model="messageInput"
@@ -54,10 +57,6 @@ const handleSubmit = async (e: Event) => {
             >
             <input type="submit" value="Send">
         </form>
-
-        <div v-if="preview" class="preview">
-            <img :src="preview" :alt="messageInput" />
-        </div>
     </div>
 </template>
 
