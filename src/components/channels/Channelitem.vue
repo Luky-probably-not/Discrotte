@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { GetChannelByID } from "@/api/channel";
 import { useStore } from "@/store";
 import { type Channel } from "@/types";
 const store = useStore();
@@ -6,10 +7,15 @@ const store = useStore();
 defineProps<{
     channel: Channel
 }>()
+
+const changeChannel = async(id : number) => {
+    store.currentChannel = await GetChannelByID(id);
+}
+
 </script>
 
 <template>
-    <section class="channel-item" @click="store.currentChannel = channel">
+    <section class="channel-item" @click="changeChannel(channel.id)">
         <img :src="channel.img" alt="channel picture" />
         <p>{{ channel.name }}</p>
     </section>

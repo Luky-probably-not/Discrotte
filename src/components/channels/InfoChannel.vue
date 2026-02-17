@@ -1,35 +1,29 @@
 <script setup lang="ts">
-import { getOneUserByName } from '@/api/user';
 import { useStore } from '@/store';
-import { computed, ref, watch, type Ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import UserInfo from '../users/UserInfo.vue';
 
 const store = useStore();
 
-const channelUsers : Ref<Array<string>, Array<string>> = ref([]);
+const isCreator = ref(false);
 
-const currentChannelWatcher = computed(() => store.currentChannel!)
+const channelWatcher = computed(() => store.currentChannel!)
 
 watch(
-    currentChannelWatcher,
-    () => loadChannelUsers()
+    channelWatcher,
+    () => loadCreatorCheck()
 )
 
-const loadChannelUsers = async () =>{
-    channelUsers.value = store.currentChannel!.users;
-    for (let idx = 0; idx < channelUsers.value.length; idx++){
-        const displayedName = await getOneUserByName(channelUsers.value[idx]!)
-        channelUsers.value[idx] = displayedName?.display_name ?? channelUsers.value[idx];
-    }
+const loadCreatorCheck = async () => {
+    isCreator.value =store.username == store.currentChannel!.creator
 }
 
-loadChannelUsers();
+loadCreatorCheck()
+
 
 </script>
 <template>
-    <h1>Channels users</h1>
-    <li>
-        <div v-for="user of channelUsers" :key="user">{{ user }}</div>
-    </li>
+    <UserInfo :is-creator="isCreator"/>
 </template>
 <style scoped>
 </style>

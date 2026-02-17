@@ -10,13 +10,13 @@ const GetChannelByUser = async () : Promise<Channel[]> => {
     if (!response.ok) {
         console.error("Error creating message:", response.status);
     }
-    return await response.json()
+    var r = await response.json();
+    return r;
 }
 
 const GetChannelByID = async (id: number) : Promise<Channel>=> {
     const channels = await GetChannelByUser()
     const channel = channels.find(c => c.id === id);
-
     if (!channel) {
         throw new Error(`Channel ${id} not found`);
     }
@@ -66,8 +66,19 @@ const PostChannel = async (name: string, img: string) => {
     return
 }
 
+const RemoveUserFromChannel = async (username : string) => {
+    const store = useStore();
+    const channelId = store.currentChannel!.id;
+    await fetch(getApiUrl(`/protected/channel/${channelId}/user/${username}`), {
+        method: "DELETE",
+        headers : getAuthHeaders()
+    });
+    store.currentChannel = await GetChannelByID(channelId);
+
+}
 export {
     GetChannelByID,
-    GetChannelByUser, PostChannel, UpdateChannel
+    GetChannelByUser,
+    PostChannel, RemoveUserFromChannel, UpdateChannel
 };
 

@@ -1,6 +1,8 @@
 import { ref } from "vue";
 import type { User } from "@/types";
 import { getApiUrl, getAuthHeaders } from "@/api/apiHandler";
+import { useStore } from "@/store";
+import { GetChannelByID } from "./channel";
 
 const login = async (username : string, password : string) : Promise<string> => {
     const response = await fetch(getApiUrl(`/login`), {
@@ -21,6 +23,7 @@ const login = async (username : string, password : string) : Promise<string> => 
 }
 
 const addUserToChannel = async (username : string, idChannel : number ) => {
+    const store = useStore();
     const response = await fetch(getApiUrl(`/protected/channel/${idChannel}/user/${username}`), {
         method: "PUT",
         headers : getAuthHeaders(),
@@ -28,6 +31,7 @@ const addUserToChannel = async (username : string, idChannel : number ) => {
     if (!response.ok) {
         console.error("Error creating message:", response.status);
     }
+    store.currentChannel = await GetChannelByID(idChannel);
     return;
 }
 
@@ -45,6 +49,7 @@ const getOneUserByName = async (user : string) : Promise<User> => {
 
 const getMultipleUserByName = async (users : string[]) : Promise<User[]> => {
     const params = users.join(",");
+    console.log(params)
     const response = await fetch(getApiUrl(`/protected/user/meta?users=${params}`), {
         method: "GET",
         headers : getAuthHeaders(),
