@@ -4,7 +4,7 @@
 
     const store = useStore();
 
-    const props = defineProps<{
+    defineProps<{
         channel: Channel
     }>()
 </script>
