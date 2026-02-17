@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import { createMessage } from '@/api/message';
 import { useStore } from '@/store';
 
@@ -16,8 +16,9 @@ watch(() => store.currentChannel?.id, (channelId) => {
     }
 });
 
-// Save draft on input change
-const handleInput = async () => {
+// Save draft on input change + auto-resize
+const handleInput = async (e: Event) => {
+    const textarea = e.target as HTMLTextAreaElement;
     const trimmedInput = messageInput.value.trim();
 
     // Save draft to store
@@ -26,10 +27,8 @@ const handleInput = async () => {
     }
 
     // Auto-grow textarea
-    if (textareaRef.value) {
-        textareaRef.value.style.height = 'auto';
-        textareaRef.value.style.height = textareaRef.value.scrollHeight + 'px';
-    }
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
 
     if (await isValidImageUrl(trimmedInput)) {
         contentType.value = 'Image';
@@ -37,6 +36,14 @@ const handleInput = async () => {
     } else {
         contentType.value = 'Text';
         preview.value = '';
+    }
+};
+
+// Reset textarea height after clearing content
+const resetTextareaHeight = () => {
+    if (textareaRef.value) {
+        textareaRef.value.style.height = 'auto';
+        textareaRef.value.style.height = '40px'; // Reset to min height
     }
 };
 
@@ -63,6 +70,17 @@ const handleSubmit = async (e: Event) => {
     messageInput.value = '';
     preview.value = '';
     contentType.value = 'Text';
+
+    // Reset textarea height after clearing
+    nextTick(resetTextareaHeight);
+};
+
+// Handle Enter key (submit on Enter, new line on Shift+Enter)
+const handleKeydown = (e: KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSubmit(new Event('submit'));
+    }
 };
 </script>
 
@@ -76,10 +94,10 @@ const handleSubmit = async (e: Event) => {
                 ref="textareaRef"
                 v-model="messageInput"
                 @input="handleInput"
-                type="text"
+                @keydown="handleKeydown"
                 placeholder="Type a message or paste an image URL..."
                 rows="1"
-            ></textarea>
+            />
             <input type="submit" value="Send">
         </form>
     </div>
@@ -95,13 +113,6 @@ form {
     gap: 5px;
 }
 
-input[type="text"] {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
 input[type="submit"] {
     padding: 10px 15px;
     background-color: #007bff;
@@ -109,6 +120,7 @@ input[type="submit"] {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 input[type="submit"]:hover {
@@ -130,9 +142,9 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 5px;
     min-height: 40px;
-    max-height: 300px; /* Optional max height */
-    resize: none; /* Disable manual resizing */
-    overflow: hidden; /* Hide scrollbars */
+    max-height: 300px;
+    resize: none;
+    overflow: hidden;
     line-height: 1.4;
     font-family: inherit;
     font-size: inherit;
@@ -143,5 +155,4 @@ textarea:focus {
     outline: none;
     border-color: #007bff;
 }
-
 </style>
