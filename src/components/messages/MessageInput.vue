@@ -18,10 +18,19 @@ const isOverLimit = ref(false);
 // Computed max length for textarea
 const maxLength = computed(() => isImageMode.value ? IMAGE_LIMIT : TEXT_LIMIT);
 
-// Load draft when channel changes
-watch(() => store.currentChannel?.id, (channelId) => {
+// Load draft when channel changes + RESET HEIGHT
+watch(() => store.currentChannel?.id, async (channelId) => {
     if (channelId) {
         messageInput.value = store.getDraftForChannel(channelId) ?? '';
+
+        // Reset textarea height after draft loads
+        await nextTick();
+        resetTextareaHeight(); // Reset first
+        if (textareaRef.value && messageInput.value.length > 0) {
+            // Trigger resize for draft content
+            textareaRef.value.style.height = 'auto';
+            textareaRef.value.style.height = `${textareaRef.value.scrollHeight}px`;
+        }
     }
 });
 
@@ -179,7 +188,7 @@ textarea {
     border: 1px solid #ddd;
     border-radius: 5px;
     min-height: 40px;
-    max-height: 300px;
+    max-height: 200px;
     resize: none;
     overflow: hidden;
     line-height: 1.4;

@@ -4,32 +4,37 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { useStore } from '@/store';
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/login',
-      name: "login",
-      component: LoginPageView
-    },
-    {
-      path: '/',
-      name: "home",
-      component: ChatPageView,
-      meta: { requiresAuth: true }
-    }
-  ]
+    history: createWebHistory(),
+    routes: [
+        {
+        path: '/login',
+        name: "login",
+        component: LoginPageView
+        },
+        {
+        path: '/',
+        name: "home",
+        component: ChatPageView,
+        meta: { requiresAuth: true }
+        }
+    ]
 })
 
-router.beforeEach((to) => {
-  const store = useStore()
+router.beforeEach(async (to) => {
+    const store = useStore()
 
-  if (to.meta.requiresAuth && store.jwtToken === "") {
-    return { name: "login" }
-  }
+    // Initialize Authentication
+    if (store.tokenExpiry === 0) {
+        await store.loadAuthInfo();
+    }
 
-  if (to.name === "login" && store.jwtToken !== "") {
-    return { name: "home" }
-  }
+    if (to.meta.requiresAuth && !store.isTokenValid) {
+        return { name: "login" }
+    }
+
+    if (to.name === "login" && store.isTokenValid) {
+        return { name: "home" }
+    }
 })
 
 export default router

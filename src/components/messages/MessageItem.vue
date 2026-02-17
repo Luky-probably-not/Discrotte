@@ -341,8 +341,8 @@ const isCreator = (): boolean => {
     font-family: inherit;
     font-size: inherit;
     line-height: 1.5;
-    min-height: 44px;
-    max-height: 300px;
+    min-height: 40px;
+    max-height: 200px;
     resize: none;
     overflow: hidden;
     box-sizing: border-box;

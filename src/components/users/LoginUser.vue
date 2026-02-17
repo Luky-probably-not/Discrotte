@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { login } from '@/api/user';
+import { login } from '@/api/auth';
 import { ref } from 'vue';
 
 import { useRouter } from 'vue-router'
