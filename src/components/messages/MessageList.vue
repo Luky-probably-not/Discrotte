@@ -23,11 +23,18 @@ const connectWebSocket = async () => {
     // Reset for new channel
     messages.value = [];
     currentOffset.value = 0;
-    hasMoreMessages.value = true;
 
     // Load initial messages from API
     const initialMessages = await getChannelMessages(store.currentChannel!.id, 0);
     messages.value = initialMessages;
+
+    // Check if initial load has less than 40 = no more to load
+    if (initialMessages.length < 40) {
+        hasMoreMessages.value = false;
+    } else {
+        hasMoreMessages.value = true;
+        currentOffset.value = initialMessages.length;
+    }
 
     // Scroll to bottom
     nextTick(() => {
@@ -45,7 +52,7 @@ const connectWebSocket = async () => {
 
     ws.onmessage = (e) => {
         const message: Message = JSON.parse(e.data);
-        messages.value.push(message); // Add to bottom (newest)
+        messages.value.push(message);
         // Scroll to bottom for new messages
         nextTick(() => {
             if (messageListRef.value) {
@@ -55,10 +62,13 @@ const connectWebSocket = async () => {
     };
 };
 
-// Load more older messages when arrow clicked
+// Load more older messages - PRESERVE SCROLL POSITION
 const loadMoreMessages = async () => {
+    const scrollHeightBefore = messageListRef.value?.scrollHeight || 0;
+
     const newMessages = await getChannelMessages(store.currentChannel!.id, currentOffset.value);
 
+    // Check if less than 40 = no more to load
     if (newMessages.length < 40) {
         hasMoreMessages.value = false;
     }
@@ -66,13 +76,26 @@ const loadMoreMessages = async () => {
     // Add to TOP of list
     messages.value.unshift(...newMessages);
     currentOffset.value += newMessages.length;
+
+    // Restore scroll position (stay where user was)
+    nextTick(() => {
+        if (messageListRef.value) {
+            const scrollHeightAfter = messageListRef.value!.scrollHeight;
+            messageListRef.value!.scrollTop = scrollHeightAfter - scrollHeightBefore;
+        }
+    });
 };
 
 const reloadMessages = async () => {
     const initialMessages = await getChannelMessages(store.currentChannel!.id, 0);
     messages.value = initialMessages;
-    currentOffset.value = initialMessages.length;
-    hasMoreMessages.value = true;
+
+    if (initialMessages.length < 40) {
+        hasMoreMessages.value = false;
+    } else {
+        hasMoreMessages.value = true;
+        currentOffset.value = initialMessages.length;
+    }
 }
 
 connectWebSocket();
@@ -90,7 +113,7 @@ onUnmounted(() => {
 
 <template>
     <section class="message-list" ref="messageListRef">
-        <!-- Load More Arrow Button (only at top) -->
+        <!-- Load More Arrow Button (shows when hasMoreMessages) -->
         <div v-if="hasMoreMessages" class="load-more-btn-container">
             <button @click="loadMoreMessages" class="load-more-btn">⬆️</button>
         </div>
