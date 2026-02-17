@@ -45,6 +45,18 @@ const isValidImageUrl = async (url: string): Promise<boolean> => {
     }
 };
 
+// Detect YouTube links
+const isYouTubeUrl = (url: string): boolean => {
+    const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
+    return youtubeRegex.test(url);
+};
+
+// Extract YouTube video ID
+const getYouTubeId = (url: string): string | null => {
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+    return match?.[1] ?? null;
+};
+
 // Auto-resize textarea
 const resizeTextarea = (): void => {
     if (textareaRef.value) {
@@ -136,6 +148,15 @@ const isCreator = (): boolean => {
             <div v-if="!isEditing">
                 <div v-if="props.contentType === 'Image'" class="content-image">
                     <img :src="props.contentValue" :alt="'Unable to load image'" />
+                </div>
+                <div v-else-if="isYouTubeUrl(props.contentValue)" class="content-youtube">
+                    <iframe
+                        :src="`https://www.youtube.com/embed/${getYouTubeId(props.contentValue)}`"
+                        frameborder="0"
+                        allowfullscreen
+                        class="youtube-iframe"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
                 </div>
                 <div v-else class="content-text">
                     <div v-html="renderMarkdown(props.contentValue)"></div>
@@ -348,5 +369,21 @@ const isCreator = (): boolean => {
 
 .cancel-btn:hover {
     background-color: #5a6268;
+}
+
+.content-youtube {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+}
+
+.youtube-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
 }
 </style>
