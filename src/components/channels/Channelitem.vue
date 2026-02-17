@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { useStore } from "@/store";
-    import { type Channel } from "@/types"
+import { type Channel } from "@/types";
 
     const store = useStore();
 
@@ -10,7 +10,7 @@
 </script>
 
 <template>
-    <div class="channel-item" @click="store.currentChannelId = channel.id">
+    <div class="channel-item" @click="store.currentChannel = channel">
         <p>{{ channel.name }}</p>
         <img :src="channel.img" alt="channel picture" />
     </div>

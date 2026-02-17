@@ -13,12 +13,12 @@ const addUser = async () => {
         console.log("userName null");
         return;
     }
-    if (store.currentChannelId == undefined || store.currentChannelId == -1)
+    if (store.currentChannel == undefined || store.currentChannel.id == -1)
     {
         console.log("password null");
         return;
     }
-    await addUserToChannel(userName.value, store.currentChannelId)
+    await addUserToChannel(userName.value, store.currentChannel.id)
 }
 
 </script>

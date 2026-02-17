@@ -1,11 +1,11 @@
+import { type Channel } from "@/types";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { type Channel } from "@/types";
 
 export const useStore = defineStore("Discard", () => {
     const username = ref<string>("")
     const jwtToken = ref<string>("")
-    const currentChannelId = ref<number>(0)
+    const currentChannel = ref<Channel | null>()
     const userChannels = ref<Channel[]>([])
     const messageDrafts = ref<Record<string, string>>({});
 
@@ -25,7 +25,7 @@ export const useStore = defineStore("Discard", () => {
     const clearAuthInfo = () => {
         username.value = ""
         jwtToken.value = ""
-        currentChannelId.value = 0
+        currentChannel.value = null
         userChannels.value = []
         messageDrafts.value = {}
         localStorage.removeItem('username')
@@ -50,7 +50,7 @@ export const useStore = defineStore("Discard", () => {
     return {
         jwtToken,
         username,
-        currentChannelId,
+        currentChannel,
         userChannels,
         messageDrafts,
         setAuthInfo,
