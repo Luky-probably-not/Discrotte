@@ -3,7 +3,7 @@ export interface Channel {
     name: string
     img: string
     creator: string
-    theme: Theme
+    theme: Theme | null
     users: Array<string>
 }
 

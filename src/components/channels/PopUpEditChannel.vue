@@ -12,15 +12,11 @@ const currentChannelInfo = ref<Channel>({
     name: "",
     img: "",
     creator: "",
-    theme: {
-        primary_color: "",
-        primary_color_dark: "",
-        accent_color: "",
-        text_color: "",
-        accent_text_color: ""
-    },
+    theme: null,
     users: []
 })
+
+const theme
 
 const loadChannelData = async () => {
     currentChannelInfo.value = await GetChannelByID(store.currentChannelId);
