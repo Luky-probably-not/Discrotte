@@ -48,6 +48,11 @@ onUnmounted(() => {
     }
 });
 
+const reloadMessages = async () => {
+    const initialMessages = await getChannelMessages(store.currentChannel!.id);
+    messages.value = initialMessages;
+}
+
 </script>
 <template>
     <div v-for="message in messages" :key="message.timestamp">
@@ -56,6 +61,7 @@ onUnmounted(() => {
             :timestamp="message.timestamp"
             :content-type="message.content.type"
             :content-value="message.content.value"
+            @message-update="reloadMessages()"
         />
     </div>
 </template>

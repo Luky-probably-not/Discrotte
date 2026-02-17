@@ -1,4 +1,3 @@
-import { ref } from "vue";
 import type { User } from "@/types";
 import { getApiUrl, getAuthHeaders } from "@/api/apiHandler";
 
