@@ -68,7 +68,7 @@ loadUser();
                 </div>
                 <p>{{ user.status }}</p>
             </div>
-            <div v-if="isCreator">
+            <div v-if="isCreator && user.username != store.currentChannel?.creator">
                 <button @click="removeUserFromChannel(user.username)">Remove</button>
             </div>
         </div>

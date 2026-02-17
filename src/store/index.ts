@@ -126,6 +126,14 @@ export const useStore = defineStore("main", () => {
         delete messageDrafts.value[channelId];
     };
 
+    const checkIsCreator = (channelId : number) => {
+        const channel = userChannels.value.find(c => c.id == channelId);
+
+        if (channel == undefined)
+            return false;
+        return channel.creator == username.value
+    }
+
     return {
         username,
         jwtToken,
@@ -141,5 +149,6 @@ export const useStore = defineStore("main", () => {
         setDraftForChannel,
         getDraftForChannel,
         clearDraftForChannel,
-    };
+        CheckIsCreator: checkIsCreator
+    }
 });

@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { UpdateChannel } from '@/api/channel';
 import { useStore } from '@/store';
-import { computed, watch } from 'vue';
+import type { Theme } from '@/types';
+import { computed, ref, watch } from 'vue';
 
 const store = useStore();
 
 const emit = defineEmits(["closeEdition"])
 
 let currentChannelInfo = store.currentChannel!;
+
+const currentTheme = ref<Theme>();
 
 const currentChannelWatcher = computed(() => {
     return store.currentChannel!
@@ -24,6 +27,7 @@ const switchEditionProcess = () => {
 }
 
 const editChanel = async () => {
+    currentChannelInfo.theme = currentTheme.value
     await UpdateChannel(store.currentChannel!.id, currentChannelInfo)
     switchEditionProcess();
     emit("closeEdition")
@@ -31,8 +35,21 @@ const editChanel = async () => {
 
 const reloadChannel = () => {
     currentChannelInfo = store.currentChannel!;
+    loadCurrentTheme()
 }
 
+const loadCurrentTheme = () => {
+    const rootStyles = getComputedStyle(document.documentElement);
+    currentTheme.value = currentChannelInfo.theme ??
+        {
+            primary_color : rootStyles.getPropertyValue('--primary-color'),
+            primary_color_dark : rootStyles.getPropertyValue('--primary-color-dark'),
+            accent_color : rootStyles.getPropertyValue('--accent-color'),
+            text_color : rootStyles.getPropertyValue('--text-color'),
+            accent_text_color : rootStyles.getPropertyValue('--accent-text-color')
+        };
+}
+loadCurrentTheme();
 
 </script>
 <template>
@@ -50,6 +67,22 @@ const reloadChannel = () => {
                     <input v-model="currentChannelInfo.name" type="text"/>
                     <input v-model="currentChannelInfo.img" type="text"/>
                     <button type="submit">Update</button>
+                </section>
+                <section>
+                    <p>Primary Color</p>
+                    <input type="color" v-model="currentTheme!.primary_color"/>
+
+                    <p>Primary Color (Dark theme)</p>
+                    <input type="color" v-model="currentTheme!.primary_color_dark"/>
+
+                    <p>Accent color</p>
+                    <input type="color" v-model="currentTheme!.accent_color"/>
+
+                    <p>Accent Text color</p>
+                    <input type="color" v-model="currentTheme!.accent_text_color"/>
+
+                    <p>Text color</p>
+                    <input type="color" v-model="currentTheme!.text_color"/>
                 </section>
             </section>
         </form>

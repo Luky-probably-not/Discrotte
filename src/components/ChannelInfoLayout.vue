@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InfoChannel from '@/components/channels/InfoChannel.vue';
+import PopUpDeleteChannel from '@/components/channels/PopUpDeleteChannel.vue';
 import PopUpEditChannel from '@/components/channels/PopUpEditChannel.vue';
 import AddUser from '@/components/users/AddUser.vue';
 import { useStore } from '@/store';
@@ -8,7 +9,7 @@ import { computed, ref, watch } from 'vue';
 const store = useStore();
 
 const InEditingProcess = ref(false);
-
+const InDeletionProcess = ref(false);
 const isCreator = ref(false);
 
 const channelWatcher = computed(() => store.currentChannel!)
@@ -21,6 +22,7 @@ watch(
 const loadCreatorCheck = async () => {
     isCreator.value =store.username == store.currentChannel!.creator
     InEditingProcess.value = false;
+    InDeletionProcess.value = false;
 }
 
 loadCreatorCheck()
@@ -29,10 +31,15 @@ loadCreatorCheck()
 <template>
     <img v-bind:src="store.currentChannel!.img">
     <article v-if="isCreator" class="toolbar">
-        <button @click="InEditingProcess = true">Edit channel ?</button>
+        <button @click="InEditingProcess = true">Edit channel</button>
         <section v-if="InEditingProcess" class="overlay">
             <PopUpEditChannel
                 @close-edition="InEditingProcess = false"/>
+        </section>
+        <button @click="InDeletionProcess = true">Delete channel</button>
+        <section v-if="InDeletionProcess" class="overlay">
+            <PopUpDeleteChannel
+                @close-popup="InDeletionProcess = false"/>
         </section>
     </article>
     <AddUser :is-creator="isCreator"/>
