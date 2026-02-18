@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useStore } from '@/store';
-import { computed, ref, watch } from 'vue';
 import UserInfo from '../users/UserInfo.vue';
 
 defineProps({

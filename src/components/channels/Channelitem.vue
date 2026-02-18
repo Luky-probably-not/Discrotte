@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GetChannelByID, LeaveChannel, RemoveUserFromChannel } from "@/api/channel";
+import { GetChannelByID, LeaveChannel } from "@/api/channel";
 import { useStore } from "@/store";
 import { type Channel } from "@/types";
 const store = useStore();
@@ -19,7 +19,7 @@ const leaveChannel = async (id : number) => {
 </script>
 
 <template>
-    
+
     <section class="channel-item" @click="changeChannel(channel.id)">
         <img :src="channel.img" alt="channel picture" />
         <p>{{ channel.name }}</p>

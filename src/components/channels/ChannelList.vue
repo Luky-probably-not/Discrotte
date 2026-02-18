@@ -1,25 +1,13 @@
 <script setup lang="ts">
-import Channelitem from '@/components/channels/Channelitem.vue';
+import Channelitem from '@/components/channels/ChannelItem.vue';
 
 import {GetChannelByUser} from "@/api/channel"
 
-import {computed, onMounted, watch} from "vue"
+import {onMounted} from "vue"
 
 import { useStore } from "@/store";
 
 const store = useStore();
-
-const channelWatcher = computed(() => store.userChannels)
-
-watch(
-    channelWatcher,
-    () => loadChannel()
-)
-
-const loadChannel = async () => {
-    store.userChannels = await GetChannelByUser()
-}
-
 
 onMounted(async () => {
     store.userChannels = await GetChannelByUser()

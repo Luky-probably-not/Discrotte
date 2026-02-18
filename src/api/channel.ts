@@ -10,8 +10,7 @@ const GetChannelByUser = async () : Promise<Channel[]> => {
     if (!response.ok) {
         console.error("Error creating message:", response.status);
     }
-    var r = await response.json();
-    return r;
+    return await response.json();
 }
 
 const GetChannelByID = async (id: number) : Promise<Channel>=> {
@@ -51,7 +50,7 @@ const PostChannel = async (name: string, img: string) => {
         id: response,
         name: name,
         img: img,
-        creator: "",
+        creator: store.username,
         theme: {
             primary_color: "",
             primary_color_dark: "",
