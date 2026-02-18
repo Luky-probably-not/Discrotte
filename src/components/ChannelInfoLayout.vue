@@ -9,7 +9,6 @@ import { computed, ref, watch } from 'vue';
 const store = useStore();
 
 const InEditingProcess = ref(false);
-const InDeletionProcess = ref(false);
 const isCreator = ref(false);
 
 const channelWatcher = computed(() => store.currentChannel!)
@@ -22,28 +21,24 @@ watch(
 const loadCreatorCheck = async () => {
     isCreator.value =store.username == store.currentChannel!.creator
     InEditingProcess.value = false;
-    InDeletionProcess.value = false;
 }
 
 loadCreatorCheck()
 
 </script>
 <template>
-    <img v-bind:src="store.currentChannel!.img">
-    <article v-if="isCreator" class="toolbar">
-        <button @click="InEditingProcess = true">Edit channel</button>
-        <section v-if="InEditingProcess" class="overlay">
-            <PopUpEditChannel
-                @close-edition="InEditingProcess = false"/>
-        </section>
-        <button @click="InDeletionProcess = true">Delete channel</button>
-        <section v-if="InDeletionProcess" class="overlay">
-            <PopUpDeleteChannel
-                @close-popup="InDeletionProcess = false"/>
-        </section>
-    </article>
-    <AddUser :is-creator="isCreator"/>
-    <InfoChannel :is-creator="isCreator"/>
+    <section class="channel-info">
+        <img v-bind:src="store.currentChannel!.img">
+        <article v-if="isCreator" class="toolbar">
+            <button @click="InEditingProcess = true" class="edit-button">Edit channel</button>
+            <section v-if="InEditingProcess" class="overlay">
+                <PopUpEditChannel
+                    @close-edition="InEditingProcess = false"/>
+            </section>
+        </article>
+        <AddUser :is-creator="isCreator"/>
+        <InfoChannel :is-creator="isCreator"/>
+    </section>
 </template>
 <style scoped>
 .overlay {
@@ -59,17 +54,29 @@ loadCreatorCheck()
 }
 .toolbar {
   display: flex;
-  align-items: flex-start;
+  justify-content: right;
+  margin-right: 130px;
 }
 
 button {
   height: auto;
 }
 
-img {
+.channel-info img {
     width: auto;
     height:100%;
-    max-height: 300px;
+    max-height: 250px;
     max-width: 350px;
+}
+
+.edit-button {
+    padding: 4px 12px;
+    background-color: orange;
+    color: white;
+    border: black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.2s;
 }
 </style>

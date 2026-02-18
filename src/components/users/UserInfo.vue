@@ -44,6 +44,7 @@ const compareUsers = () => {
 
 const removeUserFromChannel = async (userName : string) => {
     await RemoveUserFromChannel(userName);
+    await loadUser()
 }
 
 watch(
