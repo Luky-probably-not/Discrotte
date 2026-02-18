@@ -27,7 +27,7 @@ onMounted(async () => {
     .channel-list {
     display: flex;
     flex-direction: column;
-    gap: 4px; 
+    gap: 4px;
     background-color: var(--primary-color);
     margin: 4px 0;
     }

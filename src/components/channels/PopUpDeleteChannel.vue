@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { DeleteChannel } from '@/api/channel';
 import { useStore } from '@/store';
 import { computed, ref, watch } from 'vue';
-import { DeleteChannel } from '@/api/channel';
 const store = useStore();
 
 const emit= defineEmits(["closePopup"])
@@ -36,24 +36,20 @@ const reloadChannel = () => {
 </script>
 <template>
     <section class="popup">
-
         <section class="popup-headbar">
             <p class="name">Delete channel</p>
             <button class="close-btn" @click="$emit('closePopup')">x</button>
-            <form class="popup-form" @submit.prevent="deleteChannel()">
-                <section class="popup-body">
-                    <span class="image-circle">
-                        <img v-bind:src="currentChannelInfo.img"/><br>
-                    </span>
-                    <section class="inputs-container">
-                        <p>Delete channel ?</p>
-                        <input type="checkbox" id="checkbox" v-model="confirm"/>
-                        <label for="checkbox">Confirm deletion</label>
-                        <button type="submit">Delete</button>
-                    </section>
-                </section>
-            </form>
         </section>
+        <form class="popup-form" @submit.prevent="deleteChannel()">
+            <section class="popup-body">
+                <span class="image-circle">
+                    <img v-bind:src="currentChannelInfo.img"/><br>
+                </span>
+                <section class="inputs-container">
+                    <button type="submit">Delete Channel</button>
+                </section>
+            </section>
+        </form>
     </section>
 </template>
 <style scoped>
@@ -100,12 +96,36 @@ const reloadChannel = () => {
   margin-top: 10dvh;
 }
 
+.inputs-container .delete-text {
+    background-color: var(--transparent-color);
+    border-radius: 5px;
+    border: var(--border-color);
+    padding: 5px;
+    font-size: small;
+    font-family: var(--text-font-family);
+}
+
 .inputs-container input {
   padding: 8px 10px;
   border-radius: 5px;
   border: var(--border-color);
   font-family: var(--text-font-family);
   font-size: 1em;
+}
+
+.inputs-container .confirm-checkbox {
+    padding: 8px 10px;
+    border-radius: 5px;
+    border: var(--border-color);
+    font-family: var(--text-font-family);
+    font-size: 1em;
+
+}
+
+.inputs-container .delete-text {
+    display: flex;
+    flex-direction: column;
+
 }
 
 .inputs-container button {
@@ -116,5 +136,9 @@ const reloadChannel = () => {
   font-weight: var(--boutton-font-weight);
   cursor: pointer;
   font-family: var(--text-font-family);
+}
+
+.inputs-container button[type="submit"] {
+    background-color : red;
 }
 </style>
