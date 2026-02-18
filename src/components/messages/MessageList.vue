@@ -139,9 +139,11 @@ onUnmounted(() => {
 .messages{
     flex: 1;
 }
+
 .message-list {
     height: 100%;
     overflow-y: auto;
+    padding: 10px;
 }
 
 .headbar {
