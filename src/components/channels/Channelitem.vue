@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import { GetChannelByID } from "@/api/channel";
+import { GetChannelByID, LeaveChannel} from "@/api/channel";
 import { useStore } from "@/store";
 import { type Channel } from "@/types";
+import { computed } from "vue";
+
 const store = useStore();
 
-defineProps<{
+const props = defineProps<{
     channel: Channel
 }>()
 
 const changeChannel = async(id : number) => {
     store.currentChannel = await GetChannelByID(id);
+}
+
+const leaveChannel = async (id : number) => {
+    await LeaveChannel(id);
 }
 
 const setHoverPos = (e: MouseEvent) => {
@@ -27,8 +33,9 @@ const setHoverPos = (e: MouseEvent) => {
 
 <template>
     <section class="channel-item" :class="{ active: store.currentChannel?.id === channel.id }" @mousemove="e => setHoverPos(e)" @click="changeChannel(channel.id)">
-        <img :src="channel.img" alt="channel picture" />
+        <img :src="channel.img || './basePP.png'" alt="profile picture" class="PPchannel"/>
         <p>{{ channel.name }}</p>
+        <button v-if="!store.CheckIsCreator(channel.id)" @click="leaveChannel(channel.id)" class="btn-style"><img class="sortie" src="https://img.icons8.com/fluency-systems-regular/48/exit--v1.png" alt="x"/></button>
     </section>
 </template>
 
@@ -52,6 +59,10 @@ const setHoverPos = (e: MouseEvent) => {
   font-size: medium;
   font-family: var(--text-font-family);
   font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .channel-item.active {
   background: linear-gradient(
@@ -62,12 +73,17 @@ const setHoverPos = (e: MouseEvent) => {
   color: var(--text-color);
   box-shadow:0 0 0 0 transparent;
 }
-.channel-item img {
+.channel-item .PPchannel {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
   border: var(--border-color);
+}
+
+.channel-item .sortie {
+  width: 15px;
+  height: 15px;
 }
 
 .channel-item:hover {
@@ -78,4 +94,11 @@ const setHoverPos = (e: MouseEvent) => {
   );
   color: var(--text-color);
 }
+
+.btn-style {
+    background-color: var(--transparent-color);
+    color: var(--text-color);
+}
+
+
 </style>

@@ -7,4 +7,3 @@ import './assets/base.css';
 const piniaStore = createPinia();
 
 createApp(App).use(piniaStore).use(router).mount('#app')
-

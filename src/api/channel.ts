@@ -74,11 +74,31 @@ const RemoveUserFromChannel = async (username : string) => {
         headers : getAuthHeaders()
     });
     store.currentChannel = await GetChannelByID(channelId);
+}
 
+const LeaveChannel = async (channelId : number) => {
+    const store = useStore();
+    const userName = store.username
+    const request = await fetch(getApiUrl(`/protected/channel/${channelId}/user/${userName}`), {
+        method: "DELETE",
+        headers : getAuthHeaders()
+    });
+    console.log(request.status)
+    store.userChannels = await GetChannelByUser()
+}
+
+const DeleteChannel = async (channelId : number) => {
+    const store = useStore();
+
+    await fetch(getApiUrl(`/protected/channel/${channelId}`),{
+        method: "DELETE",
+        headers : getAuthHeaders()
+    });
+    store.userChannels = await GetChannelByUser();
 }
 export {
     GetChannelByID,
-    GetChannelByUser,
-    PostChannel, RemoveUserFromChannel, UpdateChannel
+    GetChannelByUser, LeaveChannel, PostChannel, RemoveUserFromChannel, UpdateChannel,
+    DeleteChannel
 };
 
