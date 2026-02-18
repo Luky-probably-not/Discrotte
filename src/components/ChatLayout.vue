@@ -16,7 +16,6 @@ import MessageInput from '@/components/messages/MessageInput.vue';
 
 .top {
   flex: 1;
-  overflow-y: auto;
 }
 
 .bottom {

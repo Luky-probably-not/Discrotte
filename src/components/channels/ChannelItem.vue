@@ -11,6 +11,13 @@ defineProps<{
 
 const changeChannel = async(id : number) => {
     store.currentChannel = await GetChannelByID(id);
+    if (store.currentChannel && store.currentChannel.theme) {
+        document.documentElement.style.setProperty('--primary-color', store.currentChannel.theme!.primary_color);
+        document.documentElement.style.setProperty('--primary-color-dark', store.currentChannel.theme!.primary_color_dark);
+        document.documentElement.style.setProperty('--accent-color', store.currentChannel.theme!.accent_color);
+        document.documentElement.style.setProperty('--accent-text-color', store.currentChannel.theme!.accent_text_color);
+        document.documentElement.style.setProperty('--text-color', store.currentChannel.theme!.text_color);
+    }
 }
 
 const leaveChannel = async (id : number) => {

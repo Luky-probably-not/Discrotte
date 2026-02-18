@@ -5,7 +5,7 @@ s<script setup lang="ts">
     const ShowAddChannel = ref(false);
 </script>
 <template>
-    <span class="headbar"></span>
+    <section class="headbar"></section>
     <article class="btn-bar">
         <button @click="ShowAddChannel = !ShowAddChannel" class="btn-style btn-popup">New Channel</button>
     </article>
@@ -28,7 +28,12 @@ s<script setup lang="ts">
   z-index: 1000;
 }
 
+.btn-bar {
+    padding: 10px;
+}
+
 .headbar {
+    flex-shrink: 0;
     height: 20px;
 }
 </style>

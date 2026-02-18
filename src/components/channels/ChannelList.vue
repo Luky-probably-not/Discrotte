@@ -25,10 +25,21 @@ onMounted(async () => {
 </template>
 <style scoped>
     .channel-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    background-color: var(--primary-color);
-    margin: 4px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: var(--primary-color);
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 5px;
+    }
+    
+    .channel-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .channel-list::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.2);
+        border-radius: 4px;
     }
 </style>

@@ -43,6 +43,7 @@ button {
 
 .btn-bar {
   border-radius: 0 0 5px 5px;
+  padding: 15px;
 }
 
 </style>
