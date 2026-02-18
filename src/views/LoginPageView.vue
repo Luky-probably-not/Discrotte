@@ -3,7 +3,7 @@ import LoginUser from '@/components/users/LoginUser.vue';
 
 </script>
 <template>
-    <section class="popup">
+    <section class="popup shadow">
         <LoginUser />
     </section>
 </template>
