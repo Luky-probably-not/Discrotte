@@ -5,6 +5,7 @@
     const ShowAddChannel = ref(false);
 </script>
 <template>
+    <span class="headbar"></span>
     <article class="btn-bar">
         <button @click="ShowAddChannel = !ShowAddChannel" class="btn-style btn-popup">New Channel</button>
     </article>
@@ -26,7 +27,8 @@
 
   z-index: 1000;
 }
-.btn-bar {
-    border-bottom: var(--border-color);
+
+.headbar {
+    height: 20px;
 }
 </style>

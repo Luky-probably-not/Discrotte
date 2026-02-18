@@ -15,19 +15,17 @@
     --boutton-primary-color: #eee;
     --transparent-color: transparent;
 }
-.popup-headbar {
-    position: absolute;
-    top: 0;
-    left: 0;
+.headbar {
     width: 100%;
-    height: 50px;
     background-color: var(--accent-color);
     display: flex;
     align-items: center;
     border-bottom: var(--border-color);
+    border-radius: 3px 3px 0 0;
+    color: var(--accent-text-color);
 }
 
-.popup-headbar p {
+.headbar p {
     margin-left: 15px;
     font-size: 1.2em;
     font-weight: var(--boutton-font-weight);

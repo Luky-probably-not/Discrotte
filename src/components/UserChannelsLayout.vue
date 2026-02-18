@@ -7,9 +7,13 @@
 
 <template>
     <section class="left-panel">
-        <AddChannel class="top"/>
-        <ChannelList class="middle"/>
-        <UserProfile class="bottom"/>
+        <section class="channels shadow">
+          <AddChannel class="top"/>
+          <ChannelList class="middle"/>
+        </section>
+        <section class="user-profile shadow">
+          <UserProfile class="bottom"/>
+        </section>
     </section>
 </template>
 
@@ -18,7 +22,16 @@
   display: flex;
   flex-direction: column;
   flex :1; 
+  gap: 15px;
+}
+
+.channels {
+  display: flex;
+  flex-direction: column;
+  height: 85%;
   border: var(--border-color);
+  background-color: var(--primary-color);
+  border-radius: 5px;
 }
 
 .top {
@@ -41,4 +54,13 @@
   background: rgba(255,255,255,0.2);
   border-radius: 4px;
 }
+
+.user-profile {
+  border: var(--border-color);
+  border-radius: 5px;
+}
+
+.shadow {
+  box-shadow: var(--box-shadow-intern);
+  }
 </style>

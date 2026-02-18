@@ -39,8 +39,8 @@ const store = useStore();
 }
 
 .app-layout > *:nth-child(2) { /* Center: ChatLayout */
-  flex: 0 0 54%;
-  max-width: 54%;
+  flex: 0 0 55%;
+  max-width: 55%;
 }
 
 .app-layout > *:nth-child(3) { /* Right: ChannelInfoLayout */

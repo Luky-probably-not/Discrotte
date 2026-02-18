@@ -25,7 +25,7 @@
 </script>
 <template>
     <section class="popup">
-        <section class="popup-headbar">
+        <section class="headbar">
             <p class="name">{{ userInfo.username }}</p>
             <button class="close-btn" @click="$emit('closeProfile')">×</button>
         </section>
@@ -104,5 +104,11 @@
   font-weight: var(--boutton-font-weight);
   cursor: pointer;
   font-family: var(--text-font-family);
+}
+.headbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
 }
 </style>

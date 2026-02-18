@@ -14,7 +14,7 @@ const submitForm = async () => {
 </script>
 <template>
     <section class="popup">
-        <section class="popup-headbar">
+        <section class="headbar">
             <button class="close-btn" @click="emit('CloseAddChannel')">×</button>
         </section>
         <form @submit.prevent="submitForm" class="popup-form">
@@ -40,5 +40,11 @@ const submitForm = async () => {
     border: var(--border-color);
 }
 
+.headbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  height: 50px;
+}
 
 </style>

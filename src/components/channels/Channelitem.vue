@@ -45,7 +45,6 @@ const setHoverPos = (e: MouseEvent) => {
   border: var(--border-color);
   background-color: var(--primary-color);
   box-shadow: var(--box-shadow-intern);
-  filter: brightness(95%);
 }
 .channel-item p {
   flex: 1;
@@ -58,9 +57,9 @@ const setHoverPos = (e: MouseEvent) => {
   background: linear-gradient(
     135deg,
     var(--primary-color),
-    #000
+    var(--accent-color)
   );
-  color: white;
+  color: var(--text-color);
   box-shadow:0 0 0 0 transparent;
 }
 .channel-item img {
@@ -74,9 +73,9 @@ const setHoverPos = (e: MouseEvent) => {
 .channel-item:hover {
   background: radial-gradient(
     circle at var(--x) var(--y),
-    #000,
+    var(--accent-color),
     var(--primary-color)
   );
-  color: white;
+  color: var(--text-color);
 }
 </style>

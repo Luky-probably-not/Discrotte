@@ -5,16 +5,17 @@
     const showProfile = ref(false);
 </script>
 <template>
-    <article class="btn-bar">
-        <button @click="showProfile = !showProfile" class="btn-style btn-popup">Edit Profile</button>
-    </article>
-    <section v-if="showProfile" class="overlay">
-        <PopUpUserProfile
-            @closeProfile="showProfile = false"
-        />
-    </section>
-    <section v-else>
-    </section>
+        <span class="headbar"></span>
+        <article class="btn-bar">
+            <button @click="showProfile = !showProfile" class="btn-style btn-popup">Edit Profile</button>
+        </article>
+        <section v-if="showProfile" class="overlay">
+            <PopUpUserProfile
+                @closeProfile="showProfile = false"
+            />
+        </section>
+        <section v-else>
+        </section>
 </template>
 <style scoped>
 .overlay {
@@ -28,16 +29,17 @@
 
   z-index: 1000;
 }
-.toolbar {
-  display: flex;
-  align-items: flex-start;
+.panel-profile {
+  position: relative;
 }
 
 button {
   height: auto;
 }
 
-.btn-bar {
-    border-top: var(--border-color);
+.headbar {
+  height: 20px;
 }
+
+
 </style>
