@@ -162,7 +162,7 @@ const isCreator = (): boolean => {
             class="edit-btn-style"
             title="Edit message"
         >
-            <img class="edit-icon" src="https://img.icons8.com/?size=100&id=16264&format=png" alt="edit"/>
+            <img class="edit-icon" src="https://img.icons8.com/?size=100&id=49&format=png" alt="edit"/>
         </button>
     </section>
 
@@ -241,7 +241,7 @@ const isCreator = (): boolean => {
 }
 
 .content-text :deep(*){
-    margin: 0.5em 0;
+    margin: 0.5em 0.5em;
     word-wrap: break-word;
 }
 
@@ -261,15 +261,9 @@ const isCreator = (): boolean => {
 
 .edit-btn-style {
     background-color: transparent;
-    box-shadow: var(--box-shadow-intern);
-    border-radius: 5px;
-    border: var(--border-color);
-    font-weight: var(--button-font-weight);
-    font-size: medium;
-    font-family: var(--text-font-family);
-    color: var(--text-color);
+    border: none;
     cursor: pointer;
-    margin: 2em;
+    margin-left: auto;
 }
 
 .edit-icon {
