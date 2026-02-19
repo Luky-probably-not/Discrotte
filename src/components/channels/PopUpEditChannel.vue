@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UpdateChannel } from '@/api/channel';
+import { GetChannelByUser, UpdateChannel } from '@/api/channel';
 import PopUpDeleteChannel from '@/components/channels/PopUpDeleteChannel.vue'
 import { useStore } from '@/store';
 import type { Theme } from '@/types';
@@ -23,6 +23,7 @@ const editChanel = async () => {
     await UpdateChannel(store.currentChannel!.id, store.currentChannel!)
     switchEditionProcess();
     emit("closeEdition")
+    store.userChannels = await GetChannelByUser();
 }
 
 // Recharge le channel en cours suite a une modification
@@ -30,6 +31,7 @@ const reloadChannel = () => {
     store.currentChannel! = store.currentChannel!;
     InDeletionProcess.value = false
     loadCurrentTheme()
+
 }
 
 // Charge les themes du channel

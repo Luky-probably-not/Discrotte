@@ -12,6 +12,8 @@ onMounted(async () => {
     store.userChannels = await GetChannelByUser()
 })
 
+
+
 </script>
 <template>
     <section class="channel-list">
