@@ -80,7 +80,7 @@ const connectWebSocket = async () => {
         });
     };
 
-
+    // Load user data to display them with each message
     await store.getUserData()
 };
 
