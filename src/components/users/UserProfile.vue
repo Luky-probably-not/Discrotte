@@ -1,7 +1,8 @@
 <script setup lang="ts">
     import PopUpUserProfile from '@/components/users/PopUpUserProfile.vue';
     import { ref } from 'vue';
-
+    
+    // State to show or hide the profile popup
     const showProfile = ref(false);
 </script>
 <template>

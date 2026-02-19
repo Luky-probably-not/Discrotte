@@ -12,6 +12,7 @@ const store = useStore();
 
 const userName = ref("")
 
+// Ajoute un utilisateur au channel
 const addUser = async () => {
     if (userName.value == undefined || userName.value == "")
     {
@@ -19,7 +20,7 @@ const addUser = async () => {
         return;
     }
     await addUserToChannel(userName.value, store.currentChannel!.id)
-    document.getElementById('userName')!.value = "";
+    document.getElementById('userName')!.value = ""; //ESLint déclare une erreur, mais aucun problème à l'execution
 }
 
 </script>

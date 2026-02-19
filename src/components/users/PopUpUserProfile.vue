@@ -5,8 +5,10 @@
     import { ref, onMounted } from "vue"
 
     const store = useStore();
+    // Define the props for the component, in this case we don't have any props but we need to define it to use emits
     const emit = defineEmits(['closeProfile']);
 
+    // State to hold the user information for the profile popup
     const userInfo = ref<User>({
         username: '',
         display_name: '',
@@ -14,10 +16,12 @@
         status: ''
     })
 
+    // When the component is mounted, fetch the user information and update the userInfo state
     onMounted(async () => {
         userInfo.value = (await getOneUserByName(store.username))!
     })
-
+    
+    // Function to update the user information when the form is submitted, it calls the UpdateUser API and then emits an event to close the profile popup
     const update = async () => {
         await UpdateUser(userInfo.value);
         emit('closeProfile');

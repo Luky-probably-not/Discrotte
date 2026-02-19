@@ -18,6 +18,7 @@ watch(
     () => loadCreatorCheck()
 )
 
+// Controle si l'utilisateur connecté est modérateur
 const loadCreatorCheck = async () => {
     isCreator.value =store.username == store.currentChannel!.creator
     InEditingProcess.value = false;
@@ -53,20 +54,19 @@ loadCreatorCheck()
     display: flex;
     flex-direction: column;
     gap:15px;
-    max-height: 95vh;
-    width: 100%;
+    height: 100%;
 }
 
 .channel-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 50vh;
+    max-height: 50%;
 }
 
 .channel-users {
-    max-height: 45vh;
-    overflow: hidden;
+    flex:1;
+    min-height: 0;
 }
 
 .overlay {

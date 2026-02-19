@@ -12,8 +12,9 @@ const props = defineProps<{
     userName : String
 }>();
 
-const UserInfo = ref<User>()
+const UserInfo = ref<User>();
 
+// nullUser en cas de metaData null
 const nullUser : User = {
     username : props.userName.toString() ?? "blank",
     display_name : props.userName.toString() ?? "blank_display",
@@ -21,16 +22,18 @@ const nullUser : User = {
     status : ""
 }
 
+// Watcher pour la liste des utilisateurs du channel
 const channelUsersWatcher = computed(() => store.currentChannel!.users);
+
+watch(
+    channelUsersWatcher,
+    () => loadUser()
+);
+
 
 const loadUser = async () => {
     UserInfo.value = nullUser
-    console.log(props.userName)
     const u = await getOneUserByName(props.userName.toString())
-    compareUsers(u);
-}
-
-const compareUsers = (u : User | undefined) => {
     UserInfo.value = u ?? nullUser
 }
 
@@ -38,11 +41,6 @@ const removeUserFromChannel = async (userName : string) => {
     await RemoveUserFromChannel(userName);
     await loadUser()
 }
-
-watch(
-    channelUsersWatcher,
-    () => loadUser()
-);
 
 loadUser();
 
@@ -59,7 +57,7 @@ loadUser();
                         {{ UserInfo?.username || userName }}
                     </span>
                 </div>
-                <p>{{ UserInfo?.status }}</p>
+                <p class="status">{{ UserInfo?.status }}</p>
             </div>
             <div v-if="isCreator && UserInfo!.username != store.currentChannel?.creator">
                 <button class="btn-style btn-submit" @click="removeUserFromChannel(UserInfo!.username)">Remove</button>
@@ -72,7 +70,6 @@ loadUser();
     display: flex;
     align-items: center;
     gap: 6px;
-    margin: 0 0px;
     padding: 2px 14px;
     margin: 0 15% 0 5%;
     border-radius: 8px;
@@ -98,7 +95,6 @@ loadUser();
 .user-item p {
     margin: 3px 0 0 0;
     font-size: 13px;
-    color: #777;
 }
 
 .user-item > div:first-of-type,
@@ -131,6 +127,11 @@ loadUser();
 .displayName {
     margin: 0;
     cursor: pointer;
+    color: var(--text-color);
+}
+
+.status {
+    color: color-mix(in srgb, var(--text-color) 80%, white);
 }
 
 .usernameTooltip {

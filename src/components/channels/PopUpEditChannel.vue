@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UpdateChannel } from '@/api/channel';
+import { GetChannelByUser, UpdateChannel } from '@/api/channel';
 import PopUpDeleteChannel from '@/components/channels/PopUpDeleteChannel.vue'
 import { useStore } from '@/store';
 import type { Theme } from '@/types';
@@ -9,41 +9,35 @@ const store = useStore();
 
 const emit = defineEmits(["closeEdition"])
 
-let currentChannelInfo = store.currentChannel!;
 
 let InDeletionProcess = ref(false);
 const currentTheme = ref<Theme>();
-
-const currentChannelWatcher = computed(() => {
-    return store.currentChannel!
-})
-
-watch(
-    currentChannelWatcher,
-    () => {
-        reloadChannel();
-    })
 
 const switchEditionProcess = () => {
     reloadChannel();
 }
 
+// Modifie un channel
 const editChanel = async () => {
-    currentChannelInfo.theme = currentTheme.value
-    await UpdateChannel(store.currentChannel!.id, currentChannelInfo)
+    store.currentChannel!.theme = currentTheme.value
+    await UpdateChannel(store.currentChannel!.id, store.currentChannel!)
     switchEditionProcess();
     emit("closeEdition")
+    store.userChannels = await GetChannelByUser();
 }
 
+// Recharge le channel en cours suite a une modification
 const reloadChannel = () => {
-    currentChannelInfo = store.currentChannel!;
+    store.currentChannel! = store.currentChannel!;
     InDeletionProcess.value = false
     loadCurrentTheme()
+
 }
 
+// Charge les themes du channel
 const loadCurrentTheme = () => {
     const rootStyles = getComputedStyle(document.documentElement);
-    currentTheme.value = currentChannelInfo.theme ??
+    currentTheme.value = store.currentChannel!.theme ??
         {
             primary_color : rootStyles.getPropertyValue('--primary-color'),
             primary_color_dark : rootStyles.getPropertyValue('--primary-color-dark'),
@@ -65,11 +59,11 @@ loadCurrentTheme();
             <form @submit.prevent="editChanel()" class="popup-form">
                 <section class="popup-body">
                     <span class="image-circle">
-                        <img v-bind:src="currentChannelInfo.img"/><br>
+                        <img v-bind:src="store.currentChannel!.img"/><br>
                     </span>
                     <section class="inputs-container">
-                        <input v-model="currentChannelInfo.name" type="text"/>
-                        <input v-model="currentChannelInfo.img" type="text"/>
+                        <input v-model="store.currentChannel!.name" type="text"/>
+                        <input v-model="store.currentChannel!.img" type="text"/>
                         <button type="submit" class="btn-style btn-submit">Update</button>
                     </section>
 
@@ -194,6 +188,7 @@ loadCurrentTheme();
 .theme-container input {
   border-radius: 5px;
   border: var(--border-color);
+  cursor: pointer;
 }
 .delete-button {
     padding: 10px 15px;

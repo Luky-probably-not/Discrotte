@@ -1,7 +1,7 @@
 s<script setup lang="ts">
     import PopUpChannel from '@/components/channels/PopUpChannel.vue';
     import { ref } from 'vue';
-
+    // State to control visibility of the Add Channel popup
     const ShowAddChannel = ref(false);
 </script>
 <template>

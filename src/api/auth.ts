@@ -1,6 +1,6 @@
 import { getApiUrl, getAuthHeaders  } from "@/api/apiHandler";
 
-
+// Route login
 const login = async (username : string, password : string) : Promise<string> => {
     const response = await fetch(getApiUrl(`/login`), {
         method: "POST",
@@ -18,6 +18,8 @@ const login = async (username : string, password : string) : Promise<string> => 
     const data = await response.json()
     return data.token
 }
+
+// Route pour étendre une session de token JWT
 const extendSession = async (): Promise<string> => {
     const response = await fetch(getApiUrl(`/protected/extend_session`), {
         method: "POST",

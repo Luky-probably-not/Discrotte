@@ -3,6 +3,7 @@ import LoginPageView from '@/views/LoginPageView.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { useStore } from '@/store';
 
+// Define routes
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -20,6 +21,7 @@ const router = createRouter({
     ]
 })
 
+// Navigation guard to check authentication before each route change
 router.beforeEach(async (to) => {
     const store = useStore()
 

@@ -6,29 +6,12 @@ const store = useStore();
 
 const emit= defineEmits(["closePopup"])
 
-let currentChannelInfo = store.currentChannel!;
-
-
-const currentChannelWatcher = computed(() => {
-    return store.currentChannel!
-})
-
 const deleteChannel = async () => {
-    await DeleteChannel(currentChannelInfo.id)
+    await DeleteChannel(store.currentChannel!.id)
     emit('closePopup')
     store.currentChannel = null;
 }
 
-watch(
-    currentChannelWatcher,
-    () => {
-        reloadChannel()
-    }
-)
-
-const reloadChannel = () => {
-    currentChannelInfo = store.currentChannel!;
-}
 </script>
 <template>
     <section class="popup">
@@ -39,10 +22,10 @@ const reloadChannel = () => {
         <form class="popup-form" @submit.prevent="deleteChannel()">
             <section class="popup-body">
                 <span class="image-circle">
-                    <img v-bind:src="currentChannelInfo.img"/><br>
+                    <img v-bind:src="store.currentChannel!.img"/><br>
                 </span>
                 <section class="inputs-container">
-                    <button type="submit" @click="">Confirm Channel deletion</button>
+                    <button type="submit" class="btn-style btn-submit" @click="">Confirm Channel deletion</button>
                 </section>
             </section>
         </form>
@@ -92,18 +75,6 @@ const reloadChannel = () => {
   margin-top: 10dvh;
 }
 
-<<<<<<< HEAD
-=======
-.inputs-container .delete-text {
-    background-color: transparent;
-    border-radius: 5px;
-    border: var(--border-color);
-    padding: 5px;
-    font-size: small;
-    font-family: var(--text-font-family);
-}
-
->>>>>>> main
 .inputs-container input {
   padding: 8px 10px;
   border-radius: 5px;

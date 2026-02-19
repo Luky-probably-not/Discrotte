@@ -9,6 +9,7 @@ defineProps<{
     channel: Channel
 }>()
 
+// Change the current channel in the store and update the theme colors based on the channel theme
 const changeChannel = async(id : number) => {
     store.currentChannel = await GetChannelByID(id);
     if (store.currentChannel && store.currentChannel.theme) {
@@ -20,10 +21,12 @@ const changeChannel = async(id : number) => {
     }
 }
 
+// Leave the channel and if the current channel is the one left, reset the current channel in the store
 const leaveChannel = async (id : number) => {
     await LeaveChannel(id);
 }
 
+// Set the position of the hover effect based on the mouse position
 const setHoverPos = (e: MouseEvent) => {
   const el = e.currentTarget as HTMLElement;
   const rect = el.getBoundingClientRect();

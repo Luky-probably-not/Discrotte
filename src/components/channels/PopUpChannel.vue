@@ -2,11 +2,14 @@
 import { PostChannel} from '@/api/channel';
 import { ref } from 'vue';
 
+// Emit event to parent component to close the popup
 const emit = defineEmits(['CloseAddChannel']);
 
+// State for form inputs
 const name = ref("")
 const img = ref("")
 
+// Function to handle the add channel form submission and close the popup
 const submitForm = async () => {
   await PostChannel(name.value, img.value)
   emit('CloseAddChannel');
