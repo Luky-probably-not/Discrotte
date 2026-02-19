@@ -13,14 +13,7 @@ const props = defineProps<{
 }>();
 
 const UserInfo = ref<User>();
-
-// nullUser en cas de metaData null
-const nullUser : User = {
-    username : props.userName.toString() ?? "blank",
-    display_name : props.userName.toString() ?? "blank_display",
-    img : "./basePP.png",
-    status : ""
-}
+UserInfo.value = store.nullUser(props.userName.toString())
 
 // Watcher pour la liste des utilisateurs du channel
 const channelUsersWatcher = computed(() => store.currentChannel!.users);
@@ -30,16 +23,16 @@ watch(
     () => loadUser()
 );
 
-
 const loadUser = async () => {
-    UserInfo.value = nullUser
-    const u = await getOneUserByName(props.userName.toString())
-    UserInfo.value = u ?? nullUser
+    await store.getUserData();
+    UserInfo.value = store.UsersData.find(
+        u => u.username == props.userName
+    )
 }
 
 const removeUserFromChannel = async (userName : string) => {
     await RemoveUserFromChannel(userName);
-    await loadUser()
+    loadUser()
 }
 
 loadUser();

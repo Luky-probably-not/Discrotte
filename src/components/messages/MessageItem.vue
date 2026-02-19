@@ -4,12 +4,13 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import { updateMessage } from '@/api/message';
 import { useStore } from '@/store';
+import type { User } from '@/types';
 
 // ========== PROPS & EMITS ==========
 const props = defineProps<{
     contentType: string;
     contentValue: string;
-    author: string;
+    author: User;
     timestamp: number;
 }>();
 
@@ -119,7 +120,7 @@ const handleSaveEdit = async (): Promise<void> => {
     const updatedMessage = {
         channel_id: store.currentChannel!.id,
         timestamp: props.timestamp || 0,
-        author: props.author || '',
+        author: props.author.username || '',
         content: {
             type: editedContentType.value || 'Text',
             value: editedContent.value || ''
@@ -158,12 +159,14 @@ const formatTimestamp = (timestamp: number | undefined): string => {
 const isCreator = (): boolean => {
     return store.currentChannel?.creator === store.username;
 };
+
 </script>
 
 <template>
     <!-- Message header: author, timestamp, edit button -->
     <section class="headbar">
-        <p class="author">{{ props.author }}</p>
+        <img class="author-pic" v-bind:src="author.img"/>
+        <p class="author">{{ author!.display_name }}</p>
         <p class="timestamp">({{ formatTimestamp(props.timestamp) }})</p>
 
         <!-- Edit button (only visible to channel creator, hidden during edit) -->
@@ -206,7 +209,7 @@ const isCreator = (): boolean => {
         <section v-else class="edit-form">
             <!-- Preview for edited image URLs -->
             <div v-if="editedContentType === 'Image'" class="edit-preview">
-                <img :src="editedContent" :alt="props.author" />
+                <img :src="editedContent" :alt="props.author.username" />
             </div>
 
             <!-- Character counter during edit -->
@@ -335,6 +338,7 @@ const isCreator = (): boolean => {
 
 .author {
     font-size: 1em;
+    margin-left: 5px;
 }
 
 .timestamp {
@@ -370,5 +374,14 @@ const isCreator = (): boolean => {
 .char-counter .error {
     color: red;
     font-weight: bold;
+}
+
+.author-pic {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: var(--border-color);
+    margin-left: 5px;
 }
 </style>
