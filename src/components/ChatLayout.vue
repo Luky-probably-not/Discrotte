@@ -13,17 +13,20 @@ import MessageInput from '@/components/messages/MessageInput.vue';
   display: flex;
   flex-direction: column;
   gap: 15px;
-  height: 100vh;
+  flex:1;
+  max-height: 100vh;
 }
 
 .top {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  max-height: 83vh;
 }
 
 .bottom {
   flex-shrink: 0;
+  max-height: 10vh;
 }
 
 </style>

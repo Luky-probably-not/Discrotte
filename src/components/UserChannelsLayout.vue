@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column;
   flex: 0 0 85%;
-  height: 84vh;
+  max-height: 80vh;
   overflow: hidden;
   padding-bottom: 15px;
 }
