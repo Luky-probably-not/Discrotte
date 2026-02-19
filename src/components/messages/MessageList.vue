@@ -84,8 +84,12 @@ const connectWebSocket = async () => {
 // ========== MESSAGE LOADING ==========
 // Load older messages from history when user scrolls to top
 const loadMoreMessages = async () => {
-    // Store scroll height before adding messages
-    const scrollHeightBefore = messageListRef.value?.scrollHeight || 0;
+    const scrollContainer = messageListRef.value;
+    if (!scrollContainer) return;
+
+    // Store scroll position and container height before adding messages
+    const scrollTopBefore = scrollContainer.scrollTop;
+    const scrollHeightBefore = scrollContainer.scrollHeight;
 
     // Fetch next batch of older messages
     const newMessages = await getChannelMessages(store.currentChannel!.id, currentOffset.value);
@@ -99,11 +103,14 @@ const loadMoreMessages = async () => {
     messages.value.unshift(...newMessages);
     currentOffset.value += newMessages.length;
 
-    // Maintain scroll position
+    // Maintain scroll position by accounting for added message height
     nextTick(() => {
-        if (messageListRef.value) {
-            const scrollHeightAfter = messageListRef.value!.scrollHeight;
-            messageListRef.value!.scrollTop = scrollHeightAfter - scrollHeightBefore;
+        const scrollContainerAfter = messageListRef.value;
+        if (scrollContainerAfter) {
+            // Calculate height added by new messages and adjust scroll position
+            const scrollHeightAfter = scrollContainerAfter.scrollHeight;
+            const addedHeight = scrollHeightAfter - scrollHeightBefore;
+            scrollContainerAfter.scrollTop = scrollTopBefore + addedHeight;
         }
     });
 };
