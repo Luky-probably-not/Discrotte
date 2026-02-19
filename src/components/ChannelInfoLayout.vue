@@ -53,7 +53,7 @@ loadCreatorCheck()
     display: flex;
     flex-direction: column;
     gap:15px;
-    height: 95vh;
+    max-height: 95vh;
     width: 100%;
     overflow: hidden;
 }
@@ -61,19 +61,12 @@ loadCreatorCheck()
 .channel-info {
     display: flex;
     flex-direction: column;
-    flex: 0 0 85%;
-    max-height: 45vh;
-    overflow: hidden;
-    padding-bottom: 15px;
+    align-items: center;
+    max-height: 50vh;
 }
 
 .channel-users {
-        display: flex;
-    flex-direction: column;
-    flex: 0 0 85%;
     max-height: 45vh;
-    overflow: hidden;
-    padding-bottom: 15px;
 }
 
 .overlay {
@@ -116,10 +109,14 @@ button {
 }
 
 .right-panel img {
-    width: auto;
+    align-items: center;
     padding: 5px;
-    max-height: 97%;
+    max-height: 200px;
     max-width: 97%;
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
 }
 
 

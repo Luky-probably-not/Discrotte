@@ -28,8 +28,8 @@ const store = useStore();
 <style scoped>
 .app-layout {
   display: flex;
-  max-height: 98dvh;
-  max-width: 98dvw;
+  max-height: 95dvh;
+  max-width: 95dvw;
   gap: 1rem;
   box-sizing: border-box;
 }

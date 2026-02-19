@@ -62,7 +62,7 @@ loadUser();
                 <p>{{ UserInfo?.status }}</p>
             </div>
             <div v-if="isCreator && UserInfo!.username != store.currentChannel?.creator">
-                <button @click="removeUserFromChannel(UserInfo!.username)">Remove</button>
+                <button class="btn-style btn-submit" @click="removeUserFromChannel(UserInfo!.username)">Remove</button>
             </div>
     </section>
 </template>

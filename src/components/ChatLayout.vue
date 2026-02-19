@@ -10,18 +10,15 @@ import MessageInput from '@/components/messages/MessageInput.vue';
 </template>
 <style scoped>
 .middle-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  flex:1;
-  max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
 }
 
 .top {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  max-height: 83vh;
 }
 
 .bottom {

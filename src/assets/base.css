@@ -15,6 +15,7 @@
     --button-primary-color: #eee;
     --red-color:#e74c3c;
     --white-color: #fff;
+    --transparent-color:white;
 }
 body{
     font-family: var(--text-font-family);
@@ -61,7 +62,7 @@ body{
 }
 
 .popup-form input[type="text"], .popup-form input[type="password"] {
-    background-color: transparent;
+    background-color: var(--transparent-color);
     border-radius: 5px;
     border: var(--border-color);
     padding: 5px;
@@ -103,9 +104,6 @@ body{
     background-color: var(--primary-color);
 }
 
-.shadow {
-  box-shadow: var(--box-shadow-intern);
-}
 .window {
     background-color: var(--primary-color);
     border: var(--border-color);

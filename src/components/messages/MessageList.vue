@@ -118,11 +118,11 @@ onUnmounted(() => {
         <span class="headbar"><p>{{ channelName }}</p></span>
         <section class="message-list" ref="messageListRef" @scroll="handleScroll">
 
-            <div v-if="showLoadMore" class="load-more-btn-container">
-                <button @click="loadMoreMessages" class="load-more-btn">/\</button>
+            <div v-if="showLoadMore" class="btn-bar">
+                <button @click="loadMoreMessages" class="btn-style btn-popup">Load More Messages</button>
             </div>
 
-            <div v-for="message in messages" :key="message.timestamp" class="window shadow">
+            <div v-for="message in messages" :key="message.timestamp" class="window shadow message" :class="{ 'own-message': message.author == store.username }">
                 <MessageItem
                     :author="message.author"
                     :timestamp="message.timestamp"
@@ -138,36 +138,34 @@ onUnmounted(() => {
 <style scoped>
 .messages{
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .message-list {
     height: 100%;
     overflow-y: auto;
-    padding: 10px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.message {
+    width: 70%;
+}
+
+.own-message {
+    align-self: flex-end;
 }
 
 .headbar {
+    flex-shrink: 0;
     height: 40px;
 }
 
-.load-more-btn-container {
-    padding: 10px;
-    text-align: center;
-    background: white;
-}
-
-.load-more-btn {
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-.load-more-btn:hover {
-    background: #0056b3;
+.btn-bar {
+    background: none;
 }
 </style>

@@ -41,7 +41,7 @@ const setHoverPos = (e: MouseEvent) => {
     <section class="channel-item" :class="{ active: store.currentChannel?.id === channel.id }" @mousemove="e => setHoverPos(e)" @click="changeChannel(channel.id)">
         <img :src="channel.img || './discardlogo.png'" alt="profile picture" class="PPchannel"/>
         <p>{{ channel.name }}</p>
-        <button v-if="!store.CheckIsCreator(channel.id)" @click="leaveChannel(channel.id)" class="btn-style"><img class="sortie" src="https://img.icons8.com/fluency-systems-regular/48/exit--v1.png" alt="x"/></button>
+        <button v-if="!store.CheckIsCreator(channel.id)" @click="leaveChannel(channel.id)" class="leave-btn-style"><img class="sortie" src="https://img.icons8.com/fluency-systems-regular/48/exit--v1.png" alt="x"/></button>
     </section>
 </template>
 
@@ -101,8 +101,10 @@ const setHoverPos = (e: MouseEvent) => {
   color: var(--text-color);
 }
 
-.btn-style {
+.leave-btn-style {
     background-color: transparent;
-    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
 }
 </style>
