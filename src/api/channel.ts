@@ -2,6 +2,7 @@ import { getApiUrl, getAuthHeaders } from "@/api/apiHandler";
 import { useStore } from "@/store";
 import type { Channel } from "@/types";
 
+// Route pour récupérer les channels de l'utilisateur connecté
 const GetChannelByUser = async () : Promise<Channel[]> => {
     const response = await fetch(getApiUrl(`/protected/user/channels`),{
         method : "GET",
@@ -13,6 +14,7 @@ const GetChannelByUser = async () : Promise<Channel[]> => {
     return await response.json();
 }
 
+// Route pour récupérer un channel en fonction de son Id
 const GetChannelByID = async (id: number) : Promise<Channel>=> {
     const channels = await GetChannelByUser()
     const channel = channels.find(c => c.id === id);
@@ -22,6 +24,7 @@ const GetChannelByID = async (id: number) : Promise<Channel>=> {
     return channel;
 }
 
+// Route pour mettre un jour un channel
 const UpdateChannel = async (channelId : number, newChannel : Channel) => {
     const response = await fetch(getApiUrl(`/protected/channel/${channelId}/update_metadata`),{
         method: "PUT",
@@ -34,7 +37,7 @@ const UpdateChannel = async (channelId : number, newChannel : Channel) => {
     return;
 }
 
-
+// Route pour créer un channel et l'instantie en tant que channel actuel
 const PostChannel = async (name: string, img: string) => {
     const store = useStore()
     const request = await fetch(getApiUrl(`/protected/channel`),{
@@ -65,6 +68,7 @@ const PostChannel = async (name: string, img: string) => {
     return
 }
 
+// Route pour retirer un utilisateur du channel en cours
 const RemoveUserFromChannel = async (username : string) => {
     const store = useStore();
     const channelId = store.currentChannel!.id;
@@ -75,6 +79,7 @@ const RemoveUserFromChannel = async (username : string) => {
     store.currentChannel = await GetChannelByID(channelId);
 }
 
+// Route pour quitter un channel
 const LeaveChannel = async (channelId : number) => {
     const store = useStore();
     const userName = store.username
@@ -86,6 +91,7 @@ const LeaveChannel = async (channelId : number) => {
     store.userChannels = await GetChannelByUser()
 }
 
+// Route pour supprimer un channel
 const DeleteChannel = async (channelId : number) => {
     const store = useStore();
 
@@ -96,7 +102,12 @@ const DeleteChannel = async (channelId : number) => {
     store.userChannels = await GetChannelByUser();
 }
 export {
+    DeleteChannel,
     GetChannelByID,
-    GetChannelByUser, LeaveChannel, PostChannel, RemoveUserFromChannel, UpdateChannel,
-    DeleteChannel
+    GetChannelByUser,
+    LeaveChannel,
+    PostChannel,
+    RemoveUserFromChannel,
+    UpdateChannel
 };
+

@@ -1,6 +1,7 @@
-import type { Message } from "@/types";
 import { getApiUrl, getAuthHeaders } from "@/api/apiHandler";
+import type { Message } from "@/types";
 
+// Route pour récuperer les messages d'un channel
 const getChannelMessages = async (channelId: number, offset: number): Promise<Message[]> => {
     const response = await fetch(getApiUrl(`/protected/channel/${channelId}/messages/${offset}`), {
         method: "GET",
@@ -12,6 +13,7 @@ const getChannelMessages = async (channelId: number, offset: number): Promise<Me
     return await response.json();
 };
 
+// Route pour créer un message dans le channel
 const createMessage = async (channelId: number, type: string, message: string) => {
     const response = await fetch(getApiUrl(`/protected/channel/${channelId}/message`), {
         method : "POST",
@@ -28,6 +30,7 @@ const createMessage = async (channelId: number, type: string, message: string) =
     return;
 }
 
+// Route pour modifier un message
 const updateMessage = async (message: Message) => {
     const response = await fetch(getApiUrl(`/protected/channel/${message.channel_id}/message/moderate`), {
         method : "POST",
@@ -41,7 +44,8 @@ const updateMessage = async (message: Message) => {
 }
 
 export {
-    getChannelMessages,
     createMessage,
+    getChannelMessages,
     updateMessage
-}
+};
+

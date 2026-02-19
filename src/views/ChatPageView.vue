@@ -29,7 +29,7 @@ const store = useStore();
 .app-layout {
   display: flex;
   max-height: 95dvh;
-  max-width: 95dvw;
+  max-width: 97dvw;
   gap: 1rem;
   box-sizing: border-box;
 }
