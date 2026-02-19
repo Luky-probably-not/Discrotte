@@ -1,48 +1,46 @@
-# DisCrotte
+# Discard
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
 
-## Recommended IDE Setup
+Vous en avez marre que Discord vous vole vos données ? Leurs nouvelles politiques de confidentialités vous font peur car elles vous demandents un face-scan de votre tête ? N'attendez plus, essayez Discard ! Et si vous regrettez, vous n'aurez qu'à le défausser !
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Fonctionnalités
 
-## Recommended Browser Setup
+- Créer des channels pour discuter avec vos amis
+- Partagez des images, gifs, ou encore vidéo youtube (bientôt mp4) !
+- Personalisez les thèmes de vos channels
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Installation
 
-## Type Support for `.vue` Imports in TS
+Vous avez besoin de node.js en version `10.3.0` ou supérieur
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+[Lien vers l'installation](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm/)
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+`Vérifier la version`
 
-## Project Setup
+```bash
+npm -v
+```
 
-```sh
+Puis, installer toutes les dépendances du projet
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Configuration
 
-```sh
+| Clé          | Type   | Obligatoire | Exemple         | Description  |
+| ------------ | ------ | ----------- | --------------- | ------------ |
+| VITE_API_URL | string | oui         | https://api_url | Url de l'api |
+
+## Démarrage
+
+Utilisez la commande suivante pour lancer l'application
+
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+Puis, allez sur [`http://localhost:5173`](http://localhost:5173) et amusez vous
